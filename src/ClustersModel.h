@@ -1,8 +1,7 @@
 #pragma once
 
-#include "actions/Actions.h"
-
-class Cluster;
+#include <actions/Actions.h>
+#include <ClusterData.h>
 
 using namespace hdps;
 

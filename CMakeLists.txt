@@ -26,6 +26,8 @@ set(Plugin
 )
 
 set(Actions
+    src/ClustersAction.h
+    src/ClustersAction.cpp
 )
 
 set(Models

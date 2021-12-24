@@ -2,6 +2,8 @@
 
 #include "actions/Actions.h"
 
+#include "ClustersAction.h"
+
 using namespace hdps::util;
 
 namespace hdps {
@@ -26,7 +28,7 @@ public:
 
     /** Get preferred size */
     QSize sizeHint() const override {
-        return QSize(450, 600);
+        return QSize(600, 500);
     }
 
     /** Get minimum size hint*/
@@ -37,13 +39,14 @@ public:
 protected:
 
 protected:
-    Dataset<DatasetImpl>    _dataset;                   /** Smart pointer to the dataset */
+    Dataset<DatasetImpl>    _dataset;                   /** Smart pointer to the source dataset */
     GroupAction             _groupAction;               /** Group action */
     StringAction            _sourceDatasetNameAction;   /** Source dataset name action */
     StringAction            _targetDatasetNameAction;   /** Target dataset name action */
     ToggleAction            _existingDatasetAction;     /** Existing dataset action */
     DatasetPickerAction     _targetDatasetAction;       /** Target dataset action */
     OptionAction            _groupByAction;             /** Group by action */
+    ClustersAction          _clustersAction;            /** Clusters action */
 };
 
 }

@@ -18,7 +18,8 @@ ExtractMetaDataDialog::ExtractMetaDataDialog(QWidget* parent, const Dataset<Data
     _targetDatasetNameAction(this, "Target dataset"),
     _existingDatasetAction(this, "Existing dataset"),
     _targetDatasetAction(this, "Target dataset"),
-    _groupByAction(this, "Group by", { "Identifier" }, "Identifier", "Identifier")
+    _groupByAction(this, "Group by", { "Identifier" }, "Identifier", "Identifier"),
+    _clustersAction(this)
 {
     // Exit if no dataset is present
     if (!_dataset.isValid())
@@ -33,26 +34,34 @@ ExtractMetaDataDialog::ExtractMetaDataDialog(QWidget* parent, const Dataset<Data
     _existingDatasetAction.setMayReset(false);
     _targetDatasetAction.setMayReset(false);
     _groupByAction.setMayReset(false);
+    _clustersAction.setMayReset(false);
 
     _sourceDatasetNameAction.setString(sourceDataset->getGuiName());
     _sourceDatasetNameAction.setEnabled(false);
 
+    // Add informative place holder string
     _targetDatasetNameAction.setPlaceHolderString("Enter name of the target dataset here...");
+
+    // Currently, only group by identifier is supported
+    _groupByAction.setEnabled(false);
 
     _groupAction << _sourceDatasetNameAction;
     _groupAction << _targetDatasetNameAction;
     _groupAction << _existingDatasetAction;
     _groupAction << _targetDatasetAction;
     _groupAction << _groupByAction;
+    _groupAction << _clustersAction;
 
     auto layout = new QVBoxLayout();
 
     auto groupWidget = _groupAction.createWidget(this);
 
+    // Configure group widget
     groupWidget->layout()->setMargin(0);
+    groupWidget->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding));
 
+    // Add to the layout
     layout->addWidget(groupWidget);
-    layout->addStretch(1);
 
     setLayout(layout);
 
@@ -72,6 +81,7 @@ ExtractMetaDataDialog::ExtractMetaDataDialog(QWidget* parent, const Dataset<Data
     // Handle when rejected
     connect(dialogButtonBox, &QDialogButtonBox::rejected, this, &ExtractMetaDataDialog::reject);
 
+    // Invoked when the existing dataset action is toggled
     const auto existingDatasetChanged = [this]() -> void {
 
         // Establish whether to use existing dataset or not
@@ -90,7 +100,22 @@ ExtractMetaDataDialog::ExtractMetaDataDialog(QWidget* parent, const Dataset<Data
     // Update target dataset name and target dataset action when the existing dataset action is toggled
     connect(&_existingDatasetAction, &ToggleAction::toggled, this, existingDatasetChanged);
 
+    // Initial update
     existingDatasetChanged();
+
+    // Invoked when the target dataset name changed
+    const auto targetDatasetNameChanged = [this, dialogButtonBox]() -> void {
+        dialogButtonBox->button(QDialogButtonBox::Ok)->setEnabled(!_targetDatasetNameAction.getString().isEmpty());
+    };
+
+    // Update target dataset name and target dataset action when the existing dataset action is toggled
+    connect(&_targetDatasetNameAction, &StringAction::stringChanged, this, targetDatasetNameChanged);
+
+    // Initial update
+    targetDatasetNameChanged();
+
+    // Only enable the existing dataset action when there are one or more cluster datasets in the data hierarchy
+    _existingDatasetAction.setEnabled(!Application::core()->requestAllDataSets(QVector<hdps::DataType>({ ClusterType })).isEmpty());
 }
 
 }
