@@ -1,4 +1,5 @@
 #include "ExtractMetaDataPlugin.h"
+#include "ExtractMetaDataDialog.h"
 
 #include <PointData.h>
 
@@ -18,8 +19,15 @@ void ExtractMetaDataPlugin::init()
 
 void ExtractMetaDataPlugin::transform(const Datasets& datasets)
 {
-    for (auto dataset : datasets)
-        qDebug() << "Transform" << dataset->getGuiName();
+    // Loop over all datasets and run the extraction dialog for each dataset
+    for (auto dataset : datasets) {
+
+        // Create dialog
+        ExtractMetaDataDialog extractMetaDataDialog(nullptr, dataset);
+
+        // And show it
+        extractMetaDataDialog.exec();
+    }
 }
 
 QIcon ExtractMetaDataPluginFactory::getIcon() const

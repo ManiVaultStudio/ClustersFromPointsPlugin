@@ -25,17 +25,31 @@ set(Plugin
     src/ExtractMetaDataPlugin.cpp
 )
 
-file(GLOB Actions src/*Action.*)
-file(GLOB Models src/*Model.*)
-file(GLOB JSON src/*.json)
-file(GLOB QRC res/*.qrc)
+set(Actions
+)
 
-set(SOURCES ${Plugin} ${Actions} ${Models})
-set(AUX ${JSON} ${QRC})
+set(Models
+    src/ClustersModel.h
+    src/ClustersModel.cpp
+    src/ClustersFilterModel.h
+    src/ClustersFilterModel.cpp
+)
+
+set(AUX
+    src/ExtractMetaDataPlugin.json
+)
+
+set(UI
+    src/ExtractMetaDataDialog.h
+    src/ExtractMetaDataDialog.cpp
+)
+
+set(SOURCES ${Plugin} ${Actions} ${Models} ${UI})
 
 source_group(Plugin FILES ${Plugin})
 source_group(Actions FILES ${Actions})
 source_group(Models FILES ${Models})
+source_group(UI FILES ${UI})
 source_group(Aux FILES ${AUX})
 
 include_directories("${INSTALL_DIR}/$<CONFIGURATION>/include/")
@@ -53,11 +67,13 @@ else()
 endif(MSVC)
 set(HDPS_LINK_LIBRARY "${INSTALL_DIR}/$<CONFIGURATION>/lib/${CMAKE_SHARED_LIBRARY_PREFIX}HDPS_Public${LIB_LINK_SUFFIX}")
 set(POINTDATA_LINK_LIBRARY "${INSTALL_DIR}/$<CONFIGURATION>/lib/${CMAKE_SHARED_LIBRARY_PREFIX}PointData${LIB_LINK_SUFFIX}") 
+set(POINTDATA_LINK_LIBRARY "${INSTALL_DIR}/$<CONFIGURATION>/lib/${CMAKE_SHARED_LIBRARY_PREFIX}ClusterData${LIB_LINK_SUFFIX}") 
 
 target_link_libraries(${PROJECT} Qt5::Widgets)
 target_link_libraries(${PROJECT} Qt5::WebEngineWidgets)
 target_link_libraries(${PROJECT} "${HDPS_LINK_LIBRARY}")
 target_link_libraries(${PROJECT} "${POINTDATA_LINK_LIBRARY}")
+target_link_libraries(${PROJECT} "${CLUSTERDATA_LINK_LIBRARY}")
 
 install(TARGETS ${PROJECT}
    RUNTIME DESTINATION Plugins COMPONENT SHAREDLIB
