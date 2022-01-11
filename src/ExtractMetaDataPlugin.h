@@ -5,8 +5,21 @@
 using namespace hdps::plugin;
 using namespace hdps::util;
 
+/**
+ * TODO
+ *
+ * @author Thomas Kroes
+ */
 class ExtractMetaDataPlugin : public TransformationPlugin
 {
+public:
+
+    /** Data points are grouped into clusters based on */
+    enum Algorithm {
+        Identifier,     /** ...their numerical (integral) value */
+        Histogram       /** ...in which histogram bin they belong */
+    };
+
 public:
 
     /**
@@ -26,6 +39,9 @@ public:
      * @param datasets Input datasets
      */
     void transform(const hdps::Datasets& datasets);
+
+protected:
+
 };
 
 class ExtractMetaDataPluginFactory : public TransformationPluginFactory

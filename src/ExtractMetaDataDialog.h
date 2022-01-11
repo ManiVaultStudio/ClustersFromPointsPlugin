@@ -1,12 +1,9 @@
 #pragma once
 
-#include "actions/Actions.h"
-
 #include "ClustersAction.h"
+#include "ExtractorAction.h"
 
 using namespace hdps::util;
-
-namespace hdps {
 
 /**
  * Extract meta data dialog class
@@ -22,9 +19,9 @@ public:
     /**
      * Constructor
      * @param parent Pointer to parent widget
-     * @param sourceDataset Source dataset to extract meta data from
+     * @param input Smart pointer to input points
      */
-    ExtractMetaDataDialog(QWidget* parent, const Dataset<DatasetImpl>& sourceDataset);
+    ExtractMetaDataDialog(QWidget* parent, const Dataset<Points>& input);
 
     /** Get preferred size */
     QSize sizeHint() const override {
@@ -37,16 +34,5 @@ public:
     }
 
 protected:
-
-protected:
-    Dataset<DatasetImpl>    _dataset;                   /** Smart pointer to the source dataset */
-    GroupAction             _groupAction;               /** Group action */
-    StringAction            _sourceDatasetNameAction;   /** Source dataset name action */
-    StringAction            _targetDatasetNameAction;   /** Target dataset name action */
-    ToggleAction            _existingDatasetAction;     /** Existing dataset action */
-    DatasetPickerAction     _targetDatasetAction;       /** Target dataset action */
-    OptionAction            _groupByAction;             /** Group by action */
-    ClustersAction          _clustersAction;            /** Clusters action */
+    ExtractorAction     _extractorAction;       /** Extractor action */
 };
-
-}

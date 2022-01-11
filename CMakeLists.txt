@@ -25,9 +25,26 @@ set(Plugin
     src/ExtractMetaDataPlugin.cpp
 )
 
+set(Extractor
+    src/Extractor.h
+    src/Extractor.cpp
+    src/IdentifierExtractor.h
+    src/IdentifierExtractor.cpp
+    src/HistogramExtractor.h
+    src/HistogramExtractor.cpp
+)
+
 set(Actions
     src/ClustersAction.h
     src/ClustersAction.cpp
+    src/AlgorithmAction.h
+    src/AlgorithmAction.cpp
+    src/ExtractorAction.h
+    src/ExtractorAction.cpp
+    src/IdentifierExtractorSettingsAction.h
+    src/IdentifierExtractorSettingsAction.cpp
+    src/HistogramExtractorSettingsAction.h
+    src/HistogramExtractorSettingsAction.cpp
 )
 
 set(Models
@@ -46,9 +63,10 @@ set(UI
     src/ExtractMetaDataDialog.cpp
 )
 
-set(SOURCES ${Plugin} ${Actions} ${Models} ${UI})
+set(SOURCES ${Plugin} ${Extractor} ${Actions} ${Models} ${UI})
 
 source_group(Plugin FILES ${Plugin})
+source_group(Extractor FILES ${Extractor})
 source_group(Actions FILES ${Actions})
 source_group(Models FILES ${Models})
 source_group(UI FILES ${UI})
@@ -67,9 +85,10 @@ if(MSVC)
 else()
     set(LIB_LINK_SUFFIX "${CMAKE_SHARED_LIBRARY_SUFFIX}")
 endif(MSVC)
+
 set(HDPS_LINK_LIBRARY "${INSTALL_DIR}/$<CONFIGURATION>/lib/${CMAKE_SHARED_LIBRARY_PREFIX}HDPS_Public${LIB_LINK_SUFFIX}")
 set(POINTDATA_LINK_LIBRARY "${INSTALL_DIR}/$<CONFIGURATION>/lib/${CMAKE_SHARED_LIBRARY_PREFIX}PointData${LIB_LINK_SUFFIX}") 
-set(POINTDATA_LINK_LIBRARY "${INSTALL_DIR}/$<CONFIGURATION>/lib/${CMAKE_SHARED_LIBRARY_PREFIX}ClusterData${LIB_LINK_SUFFIX}") 
+set(CLUSTERDATA_LINK_LIBRARY "${INSTALL_DIR}/$<CONFIGURATION>/lib/${CMAKE_SHARED_LIBRARY_PREFIX}ClusterData${LIB_LINK_SUFFIX}") 
 
 target_link_libraries(${PROJECT} Qt5::Widgets)
 target_link_libraries(${PROJECT} Qt5::WebEngineWidgets)
