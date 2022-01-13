@@ -6,6 +6,7 @@ using namespace hdps::util;
 Extractor::Extractor(QObject* parent, hdps::Dataset<Points> input) :
     QObject(parent),
     _input(input),
+    _dimensionIndex(0),
     _extractTimer(),
     _clusters()
 {
@@ -18,6 +19,8 @@ Extractor::Extractor(QObject* parent, hdps::Dataset<Points> input) :
         QApplication::setOverrideCursor(Qt::WaitCursor);
         {
             extract();
+
+            emit clustersChanged(_clusters);
         }
         QApplication::restoreOverrideCursor();
     });
@@ -33,7 +36,26 @@ void Extractor::requestExtraction()
     _extractTimer.start();
 }
 
-std::vector<Cluster>& Extractor::getClusters()
+QVector<Cluster>& Extractor::getClusters()
 {
     return _clusters;
+}
+
+void Extractor::setDimensionIndex(std::int32_t dimensionIndex)
+{
+    _dimensionIndex = dimensionIndex;
+
+    requestExtraction();
+}
+
+void Extractor::setClusterNamePrefix(const QString& clusterNamePrefix)
+{
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+    {
+        for (auto& cluster : _clusters)
+            cluster.setName(clusterNamePrefix + QString::number(_clusters.indexOf(cluster) + 1));
+
+        emit clustersChanged(_clusters);
+    }
+    QApplication::restoreOverrideCursor();
 }

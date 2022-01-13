@@ -35,8 +35,6 @@ set(Extractor
 )
 
 set(Actions
-    src/ClustersAction.h
-    src/ClustersAction.cpp
     src/AlgorithmAction.h
     src/AlgorithmAction.cpp
     src/ExtractorAction.h
@@ -45,13 +43,6 @@ set(Actions
     src/IdentifierExtractorSettingsAction.cpp
     src/HistogramExtractorSettingsAction.h
     src/HistogramExtractorSettingsAction.cpp
-)
-
-set(Models
-    src/ClustersModel.h
-    src/ClustersModel.cpp
-    src/ClustersFilterModel.h
-    src/ClustersFilterModel.cpp
 )
 
 set(AUX
@@ -63,12 +54,11 @@ set(UI
     src/ExtractMetaDataDialog.cpp
 )
 
-set(SOURCES ${Plugin} ${Extractor} ${Actions} ${Models} ${UI})
+set(SOURCES ${Plugin} ${Extractor} ${Actions} ${UI})
 
 source_group(Plugin FILES ${Plugin})
 source_group(Extractor FILES ${Extractor})
 source_group(Actions FILES ${Actions})
-source_group(Models FILES ${Models})
 source_group(UI FILES ${UI})
 source_group(Aux FILES ${AUX})
 

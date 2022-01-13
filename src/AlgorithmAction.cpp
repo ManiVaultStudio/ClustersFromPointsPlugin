@@ -39,6 +39,9 @@ AlgorithmAction::AlgorithmAction(QObject* parent, const Dataset<Points>& input) 
             default:
                 break;
         }
+
+        // Pass-through clusters changed event
+        connect(_extractor.get(), &Extractor::clustersChanged, this, &AlgorithmAction::clustersChanged);
     };
 
     // Update extractor when the algorithm selection changes
@@ -51,6 +54,9 @@ AlgorithmAction::AlgorithmAction(QObject* parent, const Dataset<Points>& input) 
     connect(&_currentAction, &OptionAction::currentIndexChanged, this, [this]() {
         _extractor->requestExtraction();
     });
+
+    // Perform initial extraction
+    _extractor->requestExtraction();
 }
 
 bool AlgorithmAction::isResettable() const

@@ -66,4 +66,6 @@ protected: // Action getters
 protected:
     HistogramExtractor&     _histogramExtractor;        /** Reference to histogram extractor */
     IntegralAction          _numberOfBinsAction;        /** Number of bins action */
+
+    friend class HistogramExtractor;
 };

@@ -1,14 +1,15 @@
 #pragma once
 
-#include "ClustersAction.h"
 #include "AlgorithmAction.h"
 
 #include <actions/GroupAction.h>
 #include <actions/StringAction.h>
 #include <actions/ToggleAction.h>
+#include <actions/IntegralAction.h>
 
 #include <PointsDimensionPickerAction.h>
 #include <ClusterData.h>
+#include <ClustersAction.h>
 
 using namespace hdps::util;
 
@@ -21,32 +22,44 @@ using namespace hdps::util;
  */
 class ExtractorAction : public GroupAction
 {
-    Q_OBJECT
-
 public:
 
     /**
      * Constructor
      * @param parent Pointer to parent object
-     * @param input Smart pointer to input points
+     * @param pointsDataset Smart pointer to points dataset
      */
-    ExtractorAction(QObject* parent, const Dataset<Points>& input);
-
-signals:
+    ExtractorAction(QObject* parent, Dataset<Points> pointsDataset);
 
     /**
-     * Signals that the clusters changed
-     * @param clusters Clusters
+     * Get smart pointer to input points dataset
+     * @return Smart pointer to input points dataset
      */
-    void clustersChanged(const std::vector<Cluster>& clusters);
+    Dataset<Points> getInputDataset();
+
+    /**
+     * Get whether clusters can be extracted
+     * @return Whether clusters can be extracted
+     */
+    bool canExtract();
+
+protected: // Action getters
+
+    StringAction& getInputDatasetNameAction() { return _inputDatasetNameAction; }
+    StringAction& getOutputDatasetNameAction() { return _outputDatasetNameAction; }
+    PointsDimensionPickerAction& getDimensionAction() { return _dimensionAction; }
+    AlgorithmAction& getAlgorithmAction() { return _algorithmAction; }
+    ClustersAction& getClustersAction() { return _clustersAction; }
+    IntegralAction& getNumberOfClustersAction() { return _numberOfClustersAction; }
 
 protected:
-    Dataset<Points>                 _input;                     /** Smart pointer to input points */
-    StringAction                    _inputNameAction;           /** Input dataset name action */
-    StringAction                    _outputNameAction;          /** Output dataset name action */
-    ToggleAction                    _existingDatasetAction;     /** Existing dataset action */
+    Dataset<Points>                 _inputDataset;              /** Smart pointer to points dataset */
+    StringAction                    _inputDatasetNameAction;    /** Input dataset name action */
+    StringAction                    _outputDatasetNameAction;   /** Output dataset name action */
     PointsDimensionPickerAction     _dimensionAction;           /** Current dimension action */
-    DatasetPickerAction             _targetDatasetAction;       /** Target dataset action */
     AlgorithmAction                 _algorithmAction;           /** Algorithm action */
     ClustersAction                  _clustersAction;            /** Clusters action */
+    IntegralAction                  _numberOfClustersAction;    /** Number of clusters action */
+
+    friend class ExtractMetaDataDialog;
 };

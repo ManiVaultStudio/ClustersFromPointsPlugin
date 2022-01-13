@@ -10,10 +10,12 @@ using namespace hdps;
 HistogramExtractorSettingsAction::HistogramExtractorSettingsAction(HistogramExtractor& histogramExtractor) :
     WidgetAction(&histogramExtractor),
     _histogramExtractor(histogramExtractor),
-    _numberOfBinsAction(this, "Number of bins")
+    _numberOfBinsAction(this, "Number of bins", 1, 100, 10, 10)
 {
     setIcon(Application::getIconFont("FontAwesome").getIcon("cog"));
     setText("Settings");
+
+    _numberOfBinsAction.setUpdateDuringDrag(false);
 
     // Request extraction when the number of histogram bins changes
     connect(&_numberOfBinsAction, &IntegralAction::valueChanged, this, [&histogramExtractor]() {

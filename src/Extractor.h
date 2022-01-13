@@ -11,7 +11,7 @@ using namespace hdps::util;
 using namespace hdps::gui;
 
 /**
- * TODO
+ * Base extractor class
  *
  * @author Thomas Kroes
  */
@@ -44,17 +44,38 @@ public:
      * Get clusters
      * @return Clusters
      */
-    std::vector<Cluster>& getClusters();
+    QVector<Cluster>& getClusters();
+
+    /**
+     * Set the dimension index
+     * @param dimensionIndex Index of the dimension to extract the meta data from
+     */
+    void setDimensionIndex(std::int32_t dimensionIndex);
+
+    /**
+     * Set the cluster name prefix
+     * @param prefix Cluster name prefix
+     */
+    void setClusterNamePrefix(const QString& clusterNamePrefix);
 
 protected:
 
     /** Performs the meta data extraction */
     virtual void extract() = 0;
 
+signals:
+
+    /**
+     * Signals that the clusters changed
+     * @param clusters Clusters
+     */
+    void clustersChanged(const QVector<Cluster>& clusters);
+
 protected:
     hdps::Dataset<Points>   _input;             /** Smart pointer to input points */
+    std::int32_t            _dimensionIndex;    /** Index of the dimension to extract the meta data from */
     QTimer                  _extractTimer;      /** Timer to prevent unnecessary updates */
-    std::vector<Cluster>    _clusters;          /** Extracted clusters */
+    QVector<Cluster>        _clusters;          /** Extracted clusters */
 };
 
 using SharedExtractor = QSharedPointer<Extractor>;

@@ -18,6 +18,8 @@ using namespace hdps::gui;
  */
 class AlgorithmAction : public WidgetAction
 {
+    Q_OBJECT
+
 public:
 
     /** Widget class for algorithm action */
@@ -77,6 +79,14 @@ public:
 public: // Action getters
 
     OptionAction& getCurrentAction() { return _currentAction; };
+
+signals:
+
+    /**
+     * Signals that the clusters changed
+     * @param clusters Clusters
+     */
+    void clustersChanged(const QVector<Cluster>& clusters);
 
 protected:
     hdps::Dataset<Points>       _input;             /** Smart pointer to input points */

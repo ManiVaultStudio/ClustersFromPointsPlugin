@@ -2,9 +2,6 @@
 
 #include <PointData.h>
 
-using namespace hdps;
-using namespace hdps::gui;
-
 IdentifierExtractor::IdentifierExtractor(QObject* parent, hdps::Dataset<Points> input) :
     Extractor(parent, input),
     _settingsAction(*this)
@@ -13,18 +10,26 @@ IdentifierExtractor::IdentifierExtractor(QObject* parent, hdps::Dataset<Points> 
 
 void IdentifierExtractor::extract()
 {
-    qDebug() << __FUNCTION__;
-
     if (!_input.isValid())
         return;
 
+    // Remove previous clusters
     _clusters.clear();
-    _clusters.reserve(_input->getNumPoints());
 
-    _input->visitData([this](auto pointData) {
-        //for (std::int32_t pointIndex = 0; pointIndex < _input->getNumPoints(); pointIndex++) {
-        //    clusters[pointIndex] = pointData[pointIndex][dimensionIndex];
-        //}
+    // Maps point value to cluster index
+    QMap<std::uint32_t, std::uint32_t> clustersMap;
+
+    _input->visitData([this, &clustersMap](auto pointData) {
+        for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(_input->getNumPoints()); pointIndex++) {
+            const auto clusterIndex = static_cast<std::uint32_t>(pointData[pointIndex][_dimensionIndex]);
+
+            if (!clustersMap.contains(clusterIndex)) {
+                _clusters.append(Cluster(_settingsAction.getClusterNamePrefixAction().getString() + QString::number(clustersMap.count() + 1)));
+                clustersMap[clusterIndex] = static_cast<std::uint32_t>(_clusters.size()) - 1;
+            }
+
+            _clusters[clustersMap[clusterIndex]].getIndices().push_back(pointIndex);
+        }
     });
 }
 
