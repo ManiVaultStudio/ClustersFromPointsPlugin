@@ -47,15 +47,3 @@ void Extractor::setDimensionIndex(std::int32_t dimensionIndex)
 
     requestExtraction();
 }
-
-void Extractor::setClusterNamePrefix(const QString& clusterNamePrefix)
-{
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-    {
-        for (auto& cluster : _clusters)
-            cluster.setName(clusterNamePrefix + QString::number(_clusters.indexOf(cluster) + 1));
-
-        emit clustersChanged(_clusters);
-    }
-    QApplication::restoreOverrideCursor();
-}

@@ -24,7 +24,7 @@ void IdentifierExtractor::extract()
             const auto clusterIndex = static_cast<std::uint32_t>(pointData[pointIndex][_dimensionIndex]);
 
             if (!clustersMap.contains(clusterIndex)) {
-                _clusters.append(Cluster(_settingsAction.getClusterNamePrefixAction().getString() + QString::number(clustersMap.count() + 1)));
+                _clusters.append(Cluster());
                 clustersMap[clusterIndex] = static_cast<std::uint32_t>(_clusters.size()) - 1;
             }
 

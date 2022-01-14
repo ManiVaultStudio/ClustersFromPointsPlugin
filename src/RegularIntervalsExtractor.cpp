@@ -1,12 +1,12 @@
-#include "HistogramExtractor.h"
+#include "RegularIntervalsExtractor.h"
 
-HistogramExtractor::HistogramExtractor(QObject* parent, hdps::Dataset<Points> input) :
+RegularIntervalsExtractor::RegularIntervalsExtractor(QObject* parent, hdps::Dataset<Points> input) :
     Extractor(parent, input),
     _settingsAction(*this)
 {
 }
 
-void HistogramExtractor::extract()
+void RegularIntervalsExtractor::extract()
 {
     auto minimum = std::numeric_limits<float>::max();
     auto maximum = std::numeric_limits<float>::lowest();
@@ -57,22 +57,13 @@ void HistogramExtractor::extract()
             bins[binIndex].append(pointIndex);
         }
 
-        // Get bin cluster name
-        const auto getClusterName = [&bins, binLength](const QVector<std::uint32_t>& bin) -> QString {
-
-            // Get the bin index
-            const auto binIndex = bins.indexOf(bin);
-
-            return "[" + QString::number(binIndex * binLength, 'f', 2) + " - " + QString::number((binIndex + 1) * binLength, 'f', 2) + "]";
-        };
-
         // Convert bins to clusters
         for (auto& bin : bins)
-            _clusters.append(Cluster(getClusterName(bin), Qt::gray, std::vector<std::uint32_t>(bin.begin(), bin.end())));
+            _clusters.append(Cluster("", Qt::gray, std::vector<std::uint32_t>(bin.begin(), bin.end())));
     });
 }
 
-WidgetAction& HistogramExtractor::getSettingsAction()
+WidgetAction& RegularIntervalsExtractor::getSettingsAction()
 {
     return _settingsAction;
 }

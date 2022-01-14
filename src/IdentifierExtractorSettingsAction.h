@@ -62,13 +62,8 @@ public:
 
 protected: // Action getters
 
-    StringAction& getClusterNamePrefixAction() { return _prefixAction; }
-    TriggerAction& getApplyAction() { return _applyAction; }
-
 protected:
     IdentifierExtractor&    _identifierExtractor;   /** Reference to identifier extractor */
-    StringAction            _prefixAction;          /** Cluster name prefix action */
-    TriggerAction           _applyAction;           /** Apply cluster name prefixes action */
 
     friend class IdentifierExtractor;
 };

@@ -17,7 +17,7 @@ public:
     /** Data points are grouped into clusters based on */
     enum Algorithm {
         Identifier,     /** ...their numerical (integral) value */
-        Histogram       /** ...in which histogram bin they belong */
+        RegularIntervals       /** ...in which histogram bin they belong */
     };
 
 public:

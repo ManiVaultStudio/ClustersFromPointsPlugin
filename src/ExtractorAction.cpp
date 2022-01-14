@@ -33,7 +33,7 @@ ExtractorAction::ExtractorAction(QObject* parent, Dataset<Points> pointsDataset)
     _outputDatasetNameAction.setPlaceHolderString("Enter name of the target dataset here...");
 
     // Set widget layout for clusters action
-    _clustersAction.setDefaultWidgetFlags(ClustersAction::Filter | ClustersAction::Select | ClustersAction::Remove | ClustersAction::Merge | ClustersAction::Colorize);
+    _clustersAction.setDefaultWidgetFlags(ClustersAction::Filter | ClustersAction::Select | ClustersAction::Remove | ClustersAction::Merge | ClustersAction::Colorize | ClustersAction::Prefix);
 
     // Disable number of clusters action and set widget type to line edit
     _numberOfClustersAction.setEnabled(false);

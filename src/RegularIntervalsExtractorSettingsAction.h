@@ -6,16 +6,16 @@
 
 using namespace hdps::gui;
 
-class HistogramExtractor;
+class RegularIntervalsExtractor;
 
 /**
- * Histogram extractor settings action class
+ * Regular intervals extractor settings action class
  *
- * Action class for configuring histogram extractor parameters
+ * Action class for configuring regular intervals extractor parameters
  *
  * @author Thomas Kroes
  */
-class HistogramExtractorSettingsAction : public WidgetAction
+class RegularIntervalsExtractorSettingsAction : public WidgetAction
 {
     Q_OBJECT
 
@@ -29,14 +29,14 @@ public:
         /**
          * Constructor
          * @param parent Pointer to parent widget
-         * @param histogramExtractorSettingsAction Pointer to histogram extractor settings action
+         * @param regularIntervalsExtractorSettingsAction Pointer to regular intervals extractor settings action
          * @param widgetFlags Widget flags for the configuration of the widget
          */
-        Widget(QWidget* parent, HistogramExtractorSettingsAction* histogramExtractorSettingsAction, const std::int32_t& widgetFlags);
+        Widget(QWidget* parent, RegularIntervalsExtractorSettingsAction* regularIntervalsExtractorSettingsAction, const std::int32_t& widgetFlags);
 
     protected:
 
-        friend class HistogramExtractorSettingsAction;
+        friend class RegularIntervalsExtractorSettingsAction;
     };
 
 protected:
@@ -55,17 +55,17 @@ public:
 
     /**
      * Constructor
-     * @param histogramExtractor Reference to histogram extractor
+     * @param RegularIntervalsExtractor Reference to regular intervals extractor
      */
-    HistogramExtractorSettingsAction(HistogramExtractor& histogramExtractor);
+    RegularIntervalsExtractorSettingsAction(RegularIntervalsExtractor& regularIntervalsExtractor);
 
 protected: // Action getters
 
     IntegralAction& getNumberOfBinsAction() { return _numberOfBinsAction; }
 
 protected:
-    HistogramExtractor&     _histogramExtractor;        /** Reference to histogram extractor */
-    IntegralAction          _numberOfBinsAction;        /** Number of bins action */
+    RegularIntervalsExtractor&      _regularIntervalsExtractor;     /** Reference to regular intervals extractor */
+    IntegralAction                  _numberOfBinsAction;            /** Number of bins action */
 
-    friend class HistogramExtractor;
+    friend class RegularIntervalsExtractor;
 };

@@ -1,6 +1,6 @@
 #include "AlgorithmAction.h"
 #include "IdentifierExtractor.h"
-#include "HistogramExtractor.h"
+#include "RegularIntervalsExtractor.h"
 #include "ExtractMetaDataPlugin.h"
 
 #include <QHBoxLayout>
@@ -11,7 +11,7 @@ AlgorithmAction::AlgorithmAction(QObject* parent, const Dataset<Points>& input) 
     WidgetAction(parent),
     _input(input),
     _extractor(),
-    _currentAction(this, "Group by", { "Identifier", "Histogram" }, "Identifier", "Identifier")
+    _currentAction(this, "Group by", { "Identifier", "Regular intervals" }, "Identifier", "Identifier")
 {
     setText("Group by");
     setMayReset(true);
@@ -32,8 +32,8 @@ AlgorithmAction::AlgorithmAction(QObject* parent, const Dataset<Points>& input) 
                 _extractor = SharedExtractor(new IdentifierExtractor(this, _input));
                 break;
 
-            case ExtractMetaDataPlugin::Algorithm::Histogram:
-                _extractor = SharedExtractor(new HistogramExtractor(this, _input));
+            case ExtractMetaDataPlugin::Algorithm::RegularIntervals:
+                _extractor = SharedExtractor(new RegularIntervalsExtractor(this, _input));
                 break;
 
             default:

@@ -30,8 +30,8 @@ set(Extractor
     src/Extractor.cpp
     src/IdentifierExtractor.h
     src/IdentifierExtractor.cpp
-    src/HistogramExtractor.h
-    src/HistogramExtractor.cpp
+    src/RegularIntervalsExtractor.h
+    src/RegularIntervalsExtractor.cpp
 )
 
 set(Actions
@@ -41,8 +41,8 @@ set(Actions
     src/ExtractorAction.cpp
     src/IdentifierExtractorSettingsAction.h
     src/IdentifierExtractorSettingsAction.cpp
-    src/HistogramExtractorSettingsAction.h
-    src/HistogramExtractorSettingsAction.cpp
+    src/RegularIntervalsExtractorSettingsAction.h
+    src/RegularIntervalsExtractorSettingsAction.cpp
 )
 
 set(AUX

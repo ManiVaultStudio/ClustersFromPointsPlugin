@@ -1,14 +1,16 @@
 #pragma once
 
 #include "Extractor.h"
-#include "HistogramExtractorSettingsAction.h"
+#include "RegularIntervalsExtractorSettingsAction.h"
 
 /**
- * TODO
+ * Regular intervals extractor class
+ *
+ * Extractor class for extracting cluster at regular intervals
  *
  * @author Thomas Kroes
  */
-class HistogramExtractor : public Extractor
+class RegularIntervalsExtractor : public Extractor
 {
 public:
 
@@ -17,7 +19,7 @@ public:
      * @param parent Pointer to parent object
      * @param input Smart pointer to input points
      */
-    HistogramExtractor(QObject* parent, hdps::Dataset<Points> input);
+    RegularIntervalsExtractor(QObject* parent, hdps::Dataset<Points> input);
 
     /** Performs the meta data extraction */
     void extract() override;
@@ -29,5 +31,5 @@ public:
     WidgetAction& getSettingsAction() override;
 
 protected:
-    HistogramExtractorSettingsAction    _settingsAction;    /** Settings action */
+    RegularIntervalsExtractorSettingsAction    _settingsAction;    /** Settings action */
 };

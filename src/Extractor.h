@@ -52,12 +52,6 @@ public:
      */
     void setDimensionIndex(std::int32_t dimensionIndex);
 
-    /**
-     * Set the cluster name prefix
-     * @param prefix Cluster name prefix
-     */
-    void setClusterNamePrefix(const QString& clusterNamePrefix);
-
 protected:
 
     /** Performs the meta data extraction */
