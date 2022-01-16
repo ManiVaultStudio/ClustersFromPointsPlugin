@@ -3,12 +3,12 @@
 #include <PointData.h>
 #include <ClusterData.h>
 
-#include <QObject>
 #include <QTimer>
 
 using namespace hdps::plugin;
-using namespace hdps::util;
 using namespace hdps::gui;
+
+class AlgorithmAction;
 
 /**
  * Base extractor class
@@ -23,17 +23,17 @@ public:
 
     /**
      * Constructor
-     * @param parent Pointer to parent object
+     * @param algorithmAction Reference to algorithm action
      * @param input Smart pointer to input points
      */
-    Extractor(QObject* parent, hdps::Dataset<Points> input);
+    Extractor(AlgorithmAction& algorithmAction, hdps::Dataset<Points> input);
 
     /** Destructor */
     ~Extractor() override = default;
 
     /**
      * Get settings action (available through tool button next to algorithm selection)
-     * @return Settings widget action
+     * @return Reference to settings widget action
      */
     virtual WidgetAction& getSettingsAction() = 0;
 
@@ -57,6 +57,9 @@ protected:
     /** Performs the meta data extraction */
     virtual void extract() = 0;
 
+    /** Performs post extraction operations */
+    virtual void postExtract() = 0;
+
 signals:
 
     /**
@@ -66,6 +69,7 @@ signals:
     void clustersChanged(const QVector<Cluster>& clusters);
 
 protected:
+    AlgorithmAction&        _algorithmAction;   /** Reference to algorithm action */
     hdps::Dataset<Points>   _input;             /** Smart pointer to input points */
     std::int32_t            _dimensionIndex;    /** Index of the dimension to extract the meta data from */
     QTimer                  _extractTimer;      /** Timer to prevent unnecessary updates */

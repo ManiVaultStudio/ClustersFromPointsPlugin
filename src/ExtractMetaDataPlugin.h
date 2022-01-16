@@ -3,10 +3,11 @@
 #include <TransformationPlugin.h>
 
 using namespace hdps::plugin;
-using namespace hdps::util;
 
 /**
- * TODO
+ * Extract meta data plugin class
+ *
+ * Data transformation plugin class for extracting meta data (clusters) from points
  *
  * @author Thomas Kroes
  */
@@ -16,15 +17,15 @@ public:
 
     /** Data points are grouped into clusters based on */
     enum Algorithm {
-        Identifier,     /** ...their numerical (integral) value */
-        RegularIntervals       /** ...in which histogram bin they belong */
+        Identifier,         /** ...their numerical (integral) value */
+        Stratification      /** ...in which stratum they belong */
     };
 
 public:
 
     /**
      * Constructors
-     * @param factory Pointer to factory
+     * @param factory Pointer to plugin factory
      */
     ExtractMetaDataPlugin(const PluginFactory* factory);
 
@@ -39,9 +40,6 @@ public:
      * @param datasets Input datasets
      */
     void transform(const hdps::Datasets& datasets);
-
-protected:
-
 };
 
 class ExtractMetaDataPluginFactory : public TransformationPluginFactory

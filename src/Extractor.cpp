@@ -1,10 +1,11 @@
 #include "Extractor.h"
+#include "AlgorithmAction.h"
 
 using namespace hdps;
-using namespace hdps::util;
 
-Extractor::Extractor(QObject* parent, hdps::Dataset<Points> input) :
-    QObject(parent),
+Extractor::Extractor(AlgorithmAction& algorithmAction, hdps::Dataset<Points> input) :
+    QObject(&algorithmAction),
+    _algorithmAction(algorithmAction),
     _input(input),
     _dimensionIndex(0),
     _extractTimer(),
@@ -16,13 +17,15 @@ Extractor::Extractor(QObject* parent, hdps::Dataset<Points> input) :
 
     // Perform the extract process when the timer times out
     connect(&_extractTimer, &QTimer::timeout, [this]() {
-        QApplication::setOverrideCursor(Qt::WaitCursor);
-        {
-            extract();
 
-            emit clustersChanged(_clusters);
-        }
-        QApplication::restoreOverrideCursor();
+        // Perform the extraction
+        extract();
+
+        // Notify others that the clusters changed
+        emit clustersChanged(_clusters);
+
+        // Execute post extraction operations
+        postExtract();
     });
 }
 

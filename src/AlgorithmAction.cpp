@@ -1,17 +1,19 @@
 #include "AlgorithmAction.h"
 #include "IdentifierExtractor.h"
-#include "RegularIntervalsExtractor.h"
+#include "StratificationExtractor.h"
+#include "ExtractorAction.h"
 #include "ExtractMetaDataPlugin.h"
 
 #include <QHBoxLayout>
 
 using namespace hdps;
 
-AlgorithmAction::AlgorithmAction(QObject* parent, const Dataset<Points>& input) :
-    WidgetAction(parent),
+AlgorithmAction::AlgorithmAction(ExtractorAction& extractorAction, const Dataset<Points>& input) :
+    WidgetAction(&extractorAction),
+    _extractorAction(extractorAction),
     _input(input),
     _extractor(),
-    _currentAction(this, "Group by", { "Identifier", "Regular intervals" }, "Identifier", "Identifier")
+    _currentAction(this, "Group by", { "Identifier", "Stratification" }, "Identifier", "Identifier")
 {
     setText("Group by");
     setMayReset(true);
@@ -29,11 +31,11 @@ AlgorithmAction::AlgorithmAction(QObject* parent, const Dataset<Points>& input) 
         switch (static_cast<ExtractMetaDataPlugin::Algorithm>(_currentAction.getCurrentIndex()))
         {
             case ExtractMetaDataPlugin::Algorithm::Identifier:
-                _extractor = SharedExtractor(new IdentifierExtractor(this, _input));
+                _extractor = SharedExtractor(new IdentifierExtractor(*this, _input));
                 break;
 
-            case ExtractMetaDataPlugin::Algorithm::RegularIntervals:
-                _extractor = SharedExtractor(new RegularIntervalsExtractor(this, _input));
+            case ExtractMetaDataPlugin::Algorithm::Stratification:
+                _extractor = SharedExtractor(new StratificationExtractor(*this, _input));
                 break;
 
             default:

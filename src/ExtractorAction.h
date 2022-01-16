@@ -43,7 +43,7 @@ public:
      */
     bool canExtract();
 
-protected: // Action getters
+public: // Action getters
 
     StringAction& getInputDatasetNameAction() { return _inputDatasetNameAction; }
     StringAction& getOutputDatasetNameAction() { return _outputDatasetNameAction; }

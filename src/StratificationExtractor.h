@@ -1,16 +1,16 @@
 #pragma once
 
 #include "Extractor.h"
-#include "IdentifierExtractorSettingsAction.h"
+#include "StratificationExtractorSettingsAction.h"
 
 /**
- * Identifier extractor class
+ * Stratification extractor class
  *
- * Extractor class for grouping points based on their integral point value
+ * Extractor class for extracting cluster at regular intervals
  *
  * @author Thomas Kroes
  */
-class IdentifierExtractor : public Extractor
+class StratificationExtractor : public Extractor
 {
 public:
 
@@ -19,7 +19,7 @@ public:
      * @param algorithmAction Reference to algorithm action
      * @param input Smart pointer to input points
      */
-    IdentifierExtractor(AlgorithmAction& algorithmAction, hdps::Dataset<Points> input);
+    StratificationExtractor(AlgorithmAction& algorithmAction, hdps::Dataset<Points> input);
 
     /** Performs the meta data extraction */
     void extract() override;
@@ -34,5 +34,5 @@ public:
     WidgetAction& getSettingsAction() override;
 
 protected:
-    IdentifierExtractorSettingsAction   _settingsAction;    /** Settings action */
+    StratificationExtractorSettingsAction    _settingsAction;   /** Settings action */
 };

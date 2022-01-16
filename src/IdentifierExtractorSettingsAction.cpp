@@ -11,6 +11,7 @@ IdentifierExtractorSettingsAction::IdentifierExtractorSettingsAction(IdentifierE
 {
     setIcon(Application::getIconFont("FontAwesome").getIcon("cog"));
     setText("Settings");
+    setEnabled(false);
 }
 
 IdentifierExtractorSettingsAction::Widget::Widget(QWidget* parent, IdentifierExtractorSettingsAction* identifierExtractorSettingsAction, const std::int32_t& widgetFlags) :

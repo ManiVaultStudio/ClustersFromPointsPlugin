@@ -3,12 +3,10 @@
 #include "ClustersAction.h"
 #include "ExtractorAction.h"
 
-using namespace hdps::util;
-
 /**
  * Extract meta data dialog class
  *
- * Dialog for extracting meta data from a source dataset
+ * Dialog for extracting meta data from a points dataset
  *
  * @author Thomas Kroes
  */

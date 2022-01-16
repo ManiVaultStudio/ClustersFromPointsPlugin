@@ -11,7 +11,7 @@ ExtractorAction::ExtractorAction(QObject* parent, Dataset<Points> pointsDataset)
     _inputDatasetNameAction(this, "Input dataset name"),
     _outputDatasetNameAction(this, "Output dataset name"),
     _dimensionAction(this, "Dimension"),
-    _algorithmAction(this, _inputDataset),
+    _algorithmAction(*this, _inputDataset),
     _clustersAction(this, Dataset<Clusters>(), pointsDataset),
     _numberOfClustersAction(this, "Number of clusters", 0, 1000000)
 {
