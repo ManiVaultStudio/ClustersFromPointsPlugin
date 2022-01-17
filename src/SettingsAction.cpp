@@ -1,36 +1,23 @@
-#include "ExtractorAction.h"
-#include "ExtractMetaDataPlugin.h"
+#include "SettingsAction.h"
+#include "ClustersFromPointsPlugin.h"
 
 #include <ClusterData.h>
 
 using namespace hdps;
 
-ExtractorAction::ExtractorAction(QObject* parent, Dataset<Points> pointsDataset) :
-    GroupAction(parent),
-    _inputDataset(pointsDataset),
-    _inputDatasetNameAction(this, "Input dataset name"),
-    _outputDatasetNameAction(this, "Output dataset name"),
+SettingsAction::SettingsAction(ClustersFromPointsPlugin* clustersFromPointsPlugin) :
+    GroupAction(nullptr, true),
+    _clustersFromPointsPlugin(clustersFromPointsPlugin),
     _dimensionAction(this, "Dimension"),
-    _algorithmAction(*this, _inputDataset),
-    _clustersAction(this, Dataset<Clusters>(), pointsDataset),
+    _algorithmAction(*this),
+    _clustersAction(this, clustersFromPointsPlugin->getInputDataset()),
     _numberOfClustersAction(this, "Number of clusters", 0, 1000000)
 {
-    // Exit if no dataset is present
-    if (!_inputDataset.isValid())
-        return;
+    setText("Clusters from points");
 
-    _inputDatasetNameAction.setMayReset(false);
-    _outputDatasetNameAction.setMayReset(false);
     _algorithmAction.setMayReset(false);
     _clustersAction.setMayReset(false);
     _numberOfClustersAction.setMayReset(false);
-
-    // Configure input name action
-    _inputDatasetNameAction.setString(_inputDataset->getGuiName());
-    _inputDatasetNameAction.setEnabled(false);
-
-    // Add informative place holder string
-    _outputDatasetNameAction.setPlaceHolderString("Enter name of the target dataset here...");
 
     // Set widget layout for clusters action
     _clustersAction.setDefaultWidgetFlags(ClustersAction::Filter | ClustersAction::Select | ClustersAction::Remove | ClustersAction::Merge | ClustersAction::Colorize | ClustersAction::Prefix);
@@ -39,9 +26,7 @@ ExtractorAction::ExtractorAction(QObject* parent, Dataset<Points> pointsDataset)
     _numberOfClustersAction.setEnabled(false);
     _numberOfClustersAction.setDefaultWidgetFlags(IntegralAction::LineEdit);
 
-    // Update dimensions action with dimension from the input
-    _dimensionAction.setPointsDataset(_inputDataset);
-
+    /*
     // Request extraction when the current dimension changes
     connect(&_dimensionAction, &PointsDimensionPickerAction::currentDimensionIndexChanged, this, [this](const std::int32_t& currentDimensionIndex) {
         _algorithmAction.getExtractor()->setDimensionIndex(currentDimensionIndex);
@@ -61,14 +46,10 @@ ExtractorAction::ExtractorAction(QObject* parent, Dataset<Points> pointsDataset)
     connect(&getClustersAction().getClustersModel(), &QAbstractItemModel::layoutChanged, this, [this]() {
         _numberOfClustersAction.setValue(_clustersAction.getClustersModel().rowCount());
     });
+    */
 }
 
-Dataset<Points> ExtractorAction::getInputDataset()
+Dataset<Points> SettingsAction::getInputDataset()
 {
-    return _inputDataset;
-}
-
-bool ExtractorAction::canExtract()
-{
-    return _clustersAction.getClustersModel().rowCount() >= 1 && !_outputDatasetNameAction.getString().isEmpty();
+    return _clustersFromPointsPlugin->getInputDataset();
 }

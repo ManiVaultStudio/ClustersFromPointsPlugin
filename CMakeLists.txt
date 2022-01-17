@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.17)
 
-set(PROJECT "ExtractMetaDataPlugin")
+set(PROJECT "ClustersFromPointsPlugin")
 
 PROJECT(${PROJECT})
 
@@ -21,8 +21,8 @@ file(TO_CMAKE_PATH $ENV{HDPS_INSTALL_DIR} INSTALL_DIR)
 find_package(Qt5 COMPONENTS Widgets WebEngineWidgets REQUIRED)
 
 set(Plugin
-    src/ExtractMetaDataPlugin.h
-    src/ExtractMetaDataPlugin.cpp
+    src/ClustersFromPointsPlugin.h
+    src/ClustersFromPointsPlugin.cpp
 )
 
 set(Extractor
@@ -37,10 +37,10 @@ set(Extractor
 )
 
 set(Actions
+    src/SettingsAction.h
+    src/SettingsAction.cpp
     src/AlgorithmAction.h
     src/AlgorithmAction.cpp
-    src/ExtractorAction.h
-    src/ExtractorAction.cpp
     src/IdentifierExtractorSettingsAction.h
     src/IdentifierExtractorSettingsAction.cpp
     src/StratificationExtractorSettingsAction.h
@@ -50,12 +50,12 @@ set(Actions
 )
 
 set(AUX
-    src/ExtractMetaDataPlugin.json
+    src/ClustersFromPointsPlugin.json
 )
 
 set(UI
-    src/ExtractMetaDataDialog.h
-    src/ExtractMetaDataDialog.cpp
+    src/ClustersFromPointsDialog.h
+    src/ClustersFromPointsDialog.cpp
 )
 
 set(SOURCES ${Plugin} ${Extractor} ${Actions} ${UI})

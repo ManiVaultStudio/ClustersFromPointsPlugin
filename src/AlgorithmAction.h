@@ -11,7 +11,7 @@
 
 using namespace hdps::gui;
 
-class ExtractorAction;
+class SettingsAction;
 
 /**
  * Algorithm action class
@@ -61,9 +61,8 @@ public:
     /**
      * Constructor
      * @param extractorAction Reference to extractor action
-     * @param input Smart pointer to input points
      */
-    AlgorithmAction(ExtractorAction& extractorAction, const hdps::Dataset<Points>& input);
+    AlgorithmAction(SettingsAction& extractorAction);
 
     /** Determines whether the action can be reset */
     bool isResettable() const override;
@@ -82,7 +81,7 @@ public:
 
 public: // Action getters
 
-    ExtractorAction& getExtractorAction() { return _extractorAction; };
+    SettingsAction& getExtractorAction() { return _settingsAction; };
     OptionAction& getCurrentAction() { return _currentAction; };
 
 signals:
@@ -94,8 +93,7 @@ signals:
     void clustersChanged(const QVector<Cluster>& clusters);
 
 protected:
-    ExtractorAction&        _extractorAction;   /** Reference to extractor action */
-    hdps::Dataset<Points>   _input;             /** Smart pointer to input points */
-    SharedExtractor         _extractor;         /** Shared pointer to extractor */
-    OptionAction            _currentAction;     /** Current algorithm action */
+    SettingsAction&     _settingsAction;    /** Reference to settings action */
+    SharedExtractor     _extractor;         /** Shared pointer to extractor */
+    OptionAction        _currentAction;     /** Current algorithm action */
 };

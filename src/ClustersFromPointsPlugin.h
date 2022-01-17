@@ -1,6 +1,8 @@
 #pragma once
 
-#include <TransformationPlugin.h>
+#include "SettingsAction.h"
+
+#include <AnalysisPlugin.h>
 
 using namespace hdps::plugin;
 
@@ -11,7 +13,7 @@ using namespace hdps::plugin;
  *
  * @author Thomas Kroes
  */
-class ExtractMetaDataPlugin : public TransformationPlugin
+class ClustersFromPointsPlugin : public AnalysisPlugin
 {
 public:
 
@@ -28,40 +30,37 @@ public:
      * Constructors
      * @param factory Pointer to plugin factory
      */
-    ExtractMetaDataPlugin(const PluginFactory* factory);
+    ClustersFromPointsPlugin(const PluginFactory* factory);
 
     /** Destructor */
-    ~ExtractMetaDataPlugin() override = default;
+    ~ClustersFromPointsPlugin() override = default;
 
     /** Initializes the plugin */
     void init() override;
 
-    /**
-     * The method which handles the data transformation
-     * @param datasets Input datasets
-     */
-    void transform(const hdps::Datasets& datasets);
+protected:
+    SettingsAction     _settingsAction;        /** Settings action */
 };
 
-class ExtractMetaDataPluginFactory : public TransformationPluginFactory
+class ClustersFromPointsPluginFactory : public AnalysisPluginFactory
 {
-    Q_INTERFACES(hdps::plugin::TransformationPluginFactory hdps::plugin::PluginFactory)
+    Q_INTERFACES(hdps::plugin::AnalysisPluginFactory hdps::plugin::PluginFactory)
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "nl.biovault.ExtractMetaDataPlugin" FILE "ExtractMetaDataPlugin.json")
+    Q_PLUGIN_METADATA(IID "nl.biovault.ClustersFromPointsPlugin" FILE "ClustersFromPointsPlugin.json")
 
 public:
 
     /** Default constructor */
-    ExtractMetaDataPluginFactory() = default;
+    ClustersFromPointsPluginFactory() = default;
 
     /** Destructor */
-    ~ExtractMetaDataPluginFactory() = default;
+    ~ClustersFromPointsPluginFactory() = default;
 
     /** Returns the plugin icon */
     QIcon getIcon() const override;
 
     /** Produces an instance of a transformation plugin */
-    TransformationPlugin* produce() override;
+    AnalysisPlugin* produce() override;
 
     hdps::DataTypes supportedDataTypes() const override;
 };

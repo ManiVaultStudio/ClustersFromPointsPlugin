@@ -1,3 +1,4 @@
+/*
 #include "ExtractMetaDataDialog.h"
 #include "ExtractMetaDataPlugin.h"
 
@@ -72,3 +73,4 @@ ExtractMetaDataDialog::ExtractMetaDataDialog(QWidget* parent, const Dataset<Poin
     // Perform initial update
     updateExtractButtonReadOnly();
 }
+*/

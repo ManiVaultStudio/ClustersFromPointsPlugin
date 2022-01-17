@@ -1,6 +1,6 @@
 #include "IdentifierExtractor.h"
 #include "AlgorithmAction.h"
-#include "ExtractorAction.h"
+#include "SettingsAction.h"
 
 #include <ClustersAction.h>
 

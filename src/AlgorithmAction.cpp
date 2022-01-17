@@ -2,36 +2,36 @@
 #include "IdentifierExtractor.h"
 #include "StratificationExtractor.h"
 #include "CustomIntervalsExtractor.h"
-#include "ExtractorAction.h"
-#include "ExtractMetaDataPlugin.h"
+#include "SettingsAction.h"
+#include "ClustersFromPointsPlugin.h"
 
 #include <QHBoxLayout>
 
 using namespace hdps;
 
-AlgorithmAction::AlgorithmAction(ExtractorAction& extractorAction, const Dataset<Points>& input) :
+AlgorithmAction::AlgorithmAction(SettingsAction& extractorAction) :
     WidgetAction(&extractorAction),
-    _extractorAction(extractorAction),
-    _input(input),
+    _settingsAction(extractorAction),
     _extractor(),
     _currentAction(this, "Group by", { "Identifier", "Stratification", "Intervals" }, "Identifier", "Identifier")
 {
-    setText("Extract by");
+    setText("Group by");
     setMayReset(true);
 
+    /*
     // Change extractor
     const auto changeExtractor = [this]() -> void {
-        switch (static_cast<ExtractMetaDataPlugin::Algorithm>(_currentAction.getCurrentIndex()))
+        switch (static_cast<ClustersFromPointsPlugin::Algorithm>(_currentAction.getCurrentIndex()))
         {
-            case ExtractMetaDataPlugin::Algorithm::Identifier:
+            case ClustersFromPointsPlugin::Algorithm::Identifier:
                 _extractor = SharedExtractor(new IdentifierExtractor(*this, _input));
                 break;
 
-            case ExtractMetaDataPlugin::Algorithm::Stratification:
+            case ClustersFromPointsPlugin::Algorithm::Stratification:
                 _extractor = SharedExtractor(new StratificationExtractor(*this, _input));
                 break;
 
-            case ExtractMetaDataPlugin::Algorithm::Interval:
+            case ClustersFromPointsPlugin::Algorithm::Interval:
                 _extractor = SharedExtractor(new CustomIntervalsExtractor(*this, _input));
                 break;
 
@@ -56,6 +56,7 @@ AlgorithmAction::AlgorithmAction(ExtractorAction& extractorAction, const Dataset
 
     // Perform initial extraction
     _extractor->requestExtraction();
+    */
 }
 
 bool AlgorithmAction::isResettable() const
@@ -89,8 +90,12 @@ AlgorithmAction::Widget::Widget(QWidget* parent, AlgorithmAction* algorithmActio
         // Remove existing settings tool button
         layout->takeAt(1);
 
+        // Get extractor from algorithm
+        auto extractor = algorithmAction->getExtractor();
+
         // Add tool button
-        layout->addWidget(algorithmAction->getExtractor()->getSettingsAction().createCollapsedWidget(this));
+        if (extractor)
+            layout->addWidget(extractor->getSettingsAction().createCollapsedWidget(this));
     };
 
     // Change settings widget when the algorithm changes
