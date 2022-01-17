@@ -15,7 +15,7 @@ AlgorithmAction::AlgorithmAction(ExtractorAction& extractorAction, const Dataset
     _extractor(),
     _currentAction(this, "Group by", { "Identifier", "Stratification" }, "Identifier", "Identifier")
 {
-    setText("Group by");
+    setText("Extract by");
     setMayReset(true);
 
     // Change extractor
