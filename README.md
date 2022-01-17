@@ -1,5 +1,5 @@
-# Extract meta data plugin
-Allows to extract meta data from points usin various extraction algorithms.
+# Clusters from points plugin
+Allows to extract clusters from points using various extraction algorithms.
 
 ![This is an image](res/images/screenshot.png)
 
