@@ -18,14 +18,6 @@ AlgorithmAction::AlgorithmAction(ExtractorAction& extractorAction, const Dataset
     setText("Group by");
     setMayReset(true);
 
-    /*
-    connect(this, &ToggleAction::toggled, this, [this]() {
-        emit resettableChanged(isResettable());
-    });
-    */
-
-    setResettable(isResettable());
-
     // Change extractor
     const auto changeExtractor = [this]() -> void {
         switch (static_cast<ExtractMetaDataPlugin::Algorithm>(_currentAction.getCurrentIndex()))
