@@ -18,7 +18,8 @@ public:
     /** Data points are grouped into clusters based on */
     enum Algorithm {
         Identifier,         /** ...their numerical (integral) value */
-        Stratification      /** ...in which stratum they belong */
+        Stratification,      /** ...in which stratum they belong */
+        Interval            /** ...in which interval(s) they belong */
     };
 
 public:

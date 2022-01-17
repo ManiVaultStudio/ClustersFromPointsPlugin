@@ -1,6 +1,7 @@
 #include "AlgorithmAction.h"
 #include "IdentifierExtractor.h"
 #include "StratificationExtractor.h"
+#include "CustomIntervalsExtractor.h"
 #include "ExtractorAction.h"
 #include "ExtractMetaDataPlugin.h"
 
@@ -13,7 +14,7 @@ AlgorithmAction::AlgorithmAction(ExtractorAction& extractorAction, const Dataset
     _extractorAction(extractorAction),
     _input(input),
     _extractor(),
-    _currentAction(this, "Group by", { "Identifier", "Stratification" }, "Identifier", "Identifier")
+    _currentAction(this, "Group by", { "Identifier", "Stratification", "Intervals" }, "Identifier", "Identifier")
 {
     setText("Extract by");
     setMayReset(true);
@@ -28,6 +29,10 @@ AlgorithmAction::AlgorithmAction(ExtractorAction& extractorAction, const Dataset
 
             case ExtractMetaDataPlugin::Algorithm::Stratification:
                 _extractor = SharedExtractor(new StratificationExtractor(*this, _input));
+                break;
+
+            case ExtractMetaDataPlugin::Algorithm::Interval:
+                _extractor = SharedExtractor(new CustomIntervalsExtractor(*this, _input));
                 break;
 
             default:

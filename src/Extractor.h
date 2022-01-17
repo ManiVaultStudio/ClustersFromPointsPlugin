@@ -74,6 +74,8 @@ protected:
     std::int32_t            _dimensionIndex;    /** Index of the dimension to extract the meta data from */
     QTimer                  _extractTimer;      /** Timer to prevent unnecessary updates */
     QVector<Cluster>        _clusters;          /** Extracted clusters */
+    float                   _minimum;           /** Data range minimum */
+    float                   _maximum;           /** Data range maximum */
 };
 
 using SharedExtractor = QSharedPointer<Extractor>;
