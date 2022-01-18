@@ -20,8 +20,9 @@ void ClustersFromPointsPlugin::init()
     // Add the settings action to the output clusters dataset
     getOutputDataset()->addAction(_settingsAction);
 
-    // Update the dimension picker
+    // Update the dimension picker and set the clusters action dataset
     _settingsAction.getDimensionAction().setPointsDataset(getInputDataset<Points>());
+    _settingsAction.getClustersAction().setClustersDataset(getOutputDataset());
 }
 
 QIcon ClustersFromPointsPluginFactory::getIcon() const

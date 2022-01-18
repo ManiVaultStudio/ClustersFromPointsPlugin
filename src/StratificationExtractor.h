@@ -17,11 +17,10 @@ public:
     /**
      * Constructor
      * @param algorithmAction Reference to algorithm action
-     * @param input Smart pointer to input points
      */
-    StratificationExtractor(AlgorithmAction& algorithmAction, hdps::Dataset<Points> input);
+    StratificationExtractor(AlgorithmAction& algorithmAction);
 
-    /** Performs the meta data extraction */
+    /** Extract clusters from points dataset and assign them to the clusters dataset */
     void extract() override;
 
     /** Performs post extraction operations */

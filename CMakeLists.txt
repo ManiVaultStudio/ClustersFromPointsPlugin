@@ -53,17 +53,11 @@ set(AUX
     src/ClustersFromPointsPlugin.json
 )
 
-set(UI
-    src/ClustersFromPointsDialog.h
-    src/ClustersFromPointsDialog.cpp
-)
-
 set(SOURCES ${Plugin} ${Extractor} ${Actions} ${UI})
 
 source_group(Plugin FILES ${Plugin})
 source_group(Extractor FILES ${Extractor})
 source_group(Actions FILES ${Actions})
-source_group(UI FILES ${UI})
 source_group(Aux FILES ${AUX})
 
 include_directories("${INSTALL_DIR}/$<CONFIGURATION>/include/")

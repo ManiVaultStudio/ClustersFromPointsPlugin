@@ -4,44 +4,57 @@
 
 #include <ClustersAction.h>
 
-IdentifierExtractor::IdentifierExtractor(AlgorithmAction& algorithmAction, hdps::Dataset<Points> input) :
-    Extractor(algorithmAction, input),
+IdentifierExtractor::IdentifierExtractor(AlgorithmAction& algorithmAction) :
+    Extractor(algorithmAction),
     _settingsAction(*this)
 {
+    // Request an extraction when the current dimension index changes
+    connect(this, &Extractor::dimensionIndexChanged, this, &Extractor::requestExtraction);
+
+    // Request an initial extraction
+    requestExtraction();
 }
 
 void IdentifierExtractor::extract()
 {
-    if (!_input.isValid())
+    // Only extract clusters from valid points dataset
+    if (!getInputDataset().isValid())
         return;
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
     {
-        // Remove previous clusters
-        _clusters.clear();
-
         // Maps point value to cluster index
         QMap<std::uint32_t, std::uint32_t> clustersMap;
 
-        _input->visitData([this, &clustersMap](auto pointData) {
-            for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(_input->getNumPoints()); pointIndex++) {
+        // Resulting clusters
+        QVector<Cluster> clusters;
+
+        getInputDataset()->visitData([this, &clusters, &clustersMap](auto pointData) {
+            for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(getInputDataset()->getNumPoints()); pointIndex++) {
                 const auto clusterIndex = static_cast<std::uint32_t>(pointData[pointIndex][_dimensionIndex]);
 
                 if (!clustersMap.contains(clusterIndex)) {
-                    _clusters.append(Cluster());
-                    clustersMap[clusterIndex] = static_cast<std::uint32_t>(_clusters.size()) - 1;
+                    clusters.append(Cluster());
+                    clustersMap[clusterIndex] = static_cast<std::uint32_t>(clusters.size()) - 1;
                 }
 
-                _clusters[clustersMap[clusterIndex]].getIndices().push_back(pointIndex);
+                // Add point index to the corresponding cluster
+                clusters[clustersMap[clusterIndex]].getIndices().push_back(pointIndex);
             }
         });
+
+        // Assign clusters to the clusters dataset
+        setClusters(clusters);
     }
     QApplication::restoreOverrideCursor();
 }
 
 void IdentifierExtractor::postExtract()
 {
-    _algorithmAction.getExtractorAction().getClustersAction().getPrefixClustersAction().getApplyAction().trigger();
+    Extractor::postExtract();
+
+    // Provide each cluster with a prefix
+    _algorithmAction.getSettingsAction().getClustersAction().getPrefixClustersAction().getApplyAction().trigger();
 }
 
 WidgetAction& IdentifierExtractor::getSettingsAction()

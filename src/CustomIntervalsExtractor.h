@@ -17,11 +17,10 @@ public:
     /**
      * Constructor
      * @param algorithmAction Reference to algorithm action
-     * @param input Smart pointer to input points
      */
-    CustomIntervalsExtractor(AlgorithmAction& algorithmAction, hdps::Dataset<Points> input);
+    CustomIntervalsExtractor(AlgorithmAction& algorithmAction);
 
-    /** Performs the meta data extraction */
+    /** Extract clusters from points dataset and assign them to the clusters dataset */
     void extract() override;
 
     /** Performs post extraction operations */
@@ -33,6 +32,13 @@ public:
      */
     WidgetAction& getSettingsAction() override;
 
+    /**
+     * Get candidate cluster (will be added to the clusters dataset when the add cluster action is triggered)
+     * @return Reference to candidate cluster
+     */
+    Cluster& getCandidateCluster();
+
 protected:
-    CustomIntervalsExtractorSettingsAction    _settingsAction;   /** Settings action */
+    CustomIntervalsExtractorSettingsAction  _settingsAction;            /** Settings action */
+    Cluster                                 _candidateCluster;          /** Candidate cluster */
 };

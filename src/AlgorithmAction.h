@@ -60,9 +60,9 @@ public:
 
     /**
      * Constructor
-     * @param extractorAction Reference to extractor action
+     * @param settingsAction Reference to settings action
      */
-    AlgorithmAction(SettingsAction& extractorAction);
+    AlgorithmAction(SettingsAction& settingsAction);
 
     /** Determines whether the action can be reset */
     bool isResettable() const override;
@@ -81,16 +81,8 @@ public:
 
 public: // Action getters
 
-    SettingsAction& getExtractorAction() { return _settingsAction; };
+    SettingsAction& getSettingsAction() { return _settingsAction; };
     OptionAction& getCurrentAction() { return _currentAction; };
-
-signals:
-
-    /**
-     * Signals that the clusters changed
-     * @param clusters Clusters
-     */
-    void clustersChanged(const QVector<Cluster>& clusters);
 
 protected:
     SettingsAction&     _settingsAction;    /** Reference to settings action */

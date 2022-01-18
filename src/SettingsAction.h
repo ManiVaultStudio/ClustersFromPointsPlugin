@@ -38,6 +38,12 @@ public:
      */
     Dataset<Points> getInputDataset();
 
+    /**
+     * Get smart pointer to clusters dataset
+     * @return Smart pointer to clusters dataset
+     */
+    Dataset<Clusters> getClustersDataset();
+
 public: // Action getters
 
     PointsDimensionPickerAction& getDimensionAction() { return _dimensionAction; }
@@ -48,9 +54,7 @@ public: // Action getters
 protected:
     ClustersFromPointsPlugin*       _clustersFromPointsPlugin;      /** Pointer to the clusters from points plugin */
     PointsDimensionPickerAction     _dimensionAction;               /** Current dimension action */
-    AlgorithmAction                 _algorithmAction;               /** Algorithm action */
     ClustersAction                  _clustersAction;                /** Clusters action */
+    AlgorithmAction                 _algorithmAction;               /** Algorithm action */
     IntegralAction                  _numberOfClustersAction;        /** Number of clusters action */
-
-    friend class ExtractMetaDataDialog;
 };

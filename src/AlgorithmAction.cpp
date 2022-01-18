@@ -9,38 +9,34 @@
 
 using namespace hdps;
 
-AlgorithmAction::AlgorithmAction(SettingsAction& extractorAction) :
-    WidgetAction(&extractorAction),
-    _settingsAction(extractorAction),
+AlgorithmAction::AlgorithmAction(SettingsAction& settingsAction) :
+    WidgetAction(&settingsAction),
+    _settingsAction(settingsAction),
     _extractor(),
     _currentAction(this, "Group by", { "Identifier", "Stratification", "Intervals" }, "Identifier", "Identifier")
 {
     setText("Group by");
     setMayReset(true);
 
-    /*
     // Change extractor
     const auto changeExtractor = [this]() -> void {
         switch (static_cast<ClustersFromPointsPlugin::Algorithm>(_currentAction.getCurrentIndex()))
         {
             case ClustersFromPointsPlugin::Algorithm::Identifier:
-                _extractor = SharedExtractor(new IdentifierExtractor(*this, _input));
+                _extractor = SharedExtractor(new IdentifierExtractor(_settingsAction.getAlgorithmAction()));
                 break;
 
             case ClustersFromPointsPlugin::Algorithm::Stratification:
-                _extractor = SharedExtractor(new StratificationExtractor(*this, _input));
+                _extractor = SharedExtractor(new StratificationExtractor(_settingsAction.getAlgorithmAction()));
                 break;
 
             case ClustersFromPointsPlugin::Algorithm::Interval:
-                _extractor = SharedExtractor(new CustomIntervalsExtractor(*this, _input));
+                _extractor = SharedExtractor(new CustomIntervalsExtractor(_settingsAction.getAlgorithmAction()));
                 break;
 
             default:
                 break;
         }
-
-        // Pass-through clusters changed event
-        connect(_extractor.get(), &Extractor::clustersChanged, this, &AlgorithmAction::clustersChanged);
     };
 
     // Update extractor when the algorithm selection changes
@@ -51,12 +47,9 @@ AlgorithmAction::AlgorithmAction(SettingsAction& extractorAction) :
 
     // Request extraction when the algorithm type changes
     connect(&_currentAction, &OptionAction::currentIndexChanged, this, [this]() {
+        _extractor->resetClusters();
         _extractor->requestExtraction();
     });
-
-    // Perform initial extraction
-    _extractor->requestExtraction();
-    */
 }
 
 bool AlgorithmAction::isResettable() const

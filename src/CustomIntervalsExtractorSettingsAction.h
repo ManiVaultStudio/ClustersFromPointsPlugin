@@ -4,7 +4,10 @@
 #include <actions/WidgetActionWidget.h>
 #include <actions/DecimalRangeAction.h>
 #include <actions/IntegralAction.h>
+#include <actions/StringAction.h>
 #include <actions/TriggerAction.h>
+
+#include <ClusterData.h>
 
 using namespace hdps::gui;
 
@@ -63,15 +66,17 @@ public:
 
 public: // Action getters
 
-    DecimalRangeAction& getRangeAction() { return _rangeAction; }
-    IntegralAction& getNumberOfClustersInRangeAction() { return _numberOfClustersInRangeAction; }
+    DecimalRangeAction& getRangeAction() { return _intervalAction; }
+    IntegralAction& getNumberOfClustersInRangeAction() { return _numberOfPointsAction; }
+    StringAction& getClusterNameAction() { return _clusterNameAction; }
     TriggerAction& getAddClusterAction() { return _addClusterAction; }
 
 protected:
-    CustomIntervalsExtractor&   _customIntervalsExtractor;          /** Reference to custom intervals extractor */
-    DecimalRangeAction          _rangeAction;                       /** Point value range action */
-    IntegralAction              _numberOfClustersInRangeAction;     /** Number of clusters in point value range action */
-    TriggerAction               _addClusterAction;                  /** Add clusters action */
+    CustomIntervalsExtractor&   _customIntervalsExtractor;      /** Reference to custom intervals extractor */
+    DecimalRangeAction          _intervalAction;                /** Point value interval action */
+    IntegralAction              _numberOfPointsAction;          /** Number of clusters in point value range action */
+    StringAction                _clusterNameAction;             /** Cluster name action */
+    TriggerAction               _addClusterAction;              /** Add clusters action */
 
     friend class StratificationExtractor;
 };

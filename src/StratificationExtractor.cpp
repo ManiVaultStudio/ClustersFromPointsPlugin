@@ -4,14 +4,18 @@
 #include <vector>
 #include <numeric>
 
-StratificationExtractor::StratificationExtractor(AlgorithmAction& algorithmAction, hdps::Dataset<Points> input) :
-    Extractor(algorithmAction, input),
+StratificationExtractor::StratificationExtractor(AlgorithmAction& algorithmAction) :
+    Extractor(algorithmAction),
     _settingsAction(*this)
 {
 }
 
 void StratificationExtractor::extract()
 {
+    // Only extract clusters from valid points dataset
+    if (!getInputDataset().isValid())
+        return;
+
     QApplication::setOverrideCursor(Qt::WaitCursor);
     {
         auto minimum = std::numeric_limits<float>::max();
@@ -20,10 +24,13 @@ void StratificationExtractor::extract()
         // Resulting strata
         QVector<QVector<std::uint32_t>> strata;
 
-        _input->visitData([this, &minimum, &maximum, &strata](auto pointData) {
+        // Resulting clusters
+        QVector<Cluster> clusters;
+
+        getInputDataset()->visitData([this, &clusters, &minimum, &maximum, &strata](auto pointData) {
 
             // Compute point value range
-            for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(_input->getNumPoints()); pointIndex++) {
+            for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(getInputDataset()->getNumPoints()); pointIndex++) {
 
                 // Get point value for the dimension
                 const auto pointValue = pointData[pointIndex][_dimensionIndex];
@@ -38,7 +45,7 @@ void StratificationExtractor::extract()
             }
 
             // Remove previous clusters
-            _clusters.clear();
+            clusters.clear();
 
             // Compute the length of the point value range
             const auto pointValueRangeLength = maximum - minimum;
@@ -53,7 +60,7 @@ void StratificationExtractor::extract()
             const auto stratumLength = pointValueRangeLength / static_cast<float>(strata.count());
 
             // Put each point in the corresponding stratum
-            for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(_input->getNumPoints()); pointIndex++) {
+            for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(getInputDataset()->getNumPoints()); pointIndex++) {
 
                 // Get point value and determine stratum index
                 const auto pointValue = pointData[pointIndex][_dimensionIndex];
@@ -79,14 +86,18 @@ void StratificationExtractor::extract()
 
             // Convert strata to clusters
             for (auto& stratum : strata)
-                _clusters.append(Cluster(getClusterName(stratum), Qt::gray, std::vector<std::uint32_t>(stratum.begin(), stratum.end())));
+                clusters.append(Cluster(getClusterName(stratum), Qt::gray, std::vector<std::uint32_t>(stratum.begin(), stratum.end())));
         });
+
+        // Assign clusters to the clusters dataset
+        setClusters(clusters);
     }
     QApplication::restoreOverrideCursor();
 }
 
 void StratificationExtractor::postExtract()
 {
+    Extractor::postExtract();
 }
 
 WidgetAction& StratificationExtractor::getSettingsAction()
