@@ -8,6 +8,8 @@ StratificationExtractor::StratificationExtractor(AlgorithmAction& algorithmActio
     Extractor(algorithmAction),
     _settingsAction(*this)
 {
+    // Request an extraction when the current dimension index changes
+    connect(this, &Extractor::dimensionIndexChanged, this, &Extractor::requestExtraction);
 }
 
 void StratificationExtractor::extract()

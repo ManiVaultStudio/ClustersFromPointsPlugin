@@ -21,6 +21,9 @@ Extractor::Extractor(AlgorithmAction& algorithmAction) :
         // Perform the extraction and execute post extraction operations
         extract();
         postExtract();
+
+        // Inform others that the extraction process finished
+        emit extracted();
     });
 
     // Update the clusters when the clusters model layout changes
@@ -83,6 +86,9 @@ void Extractor::resetClusters()
 void Extractor::setDimensionIndex(std::int32_t dimensionIndex)
 {
     _dimensionIndex = dimensionIndex;
+
+    // Dimension change invalidates the clusters
+    resetClusters();
 
     // Update the data range
     updateDataRange();

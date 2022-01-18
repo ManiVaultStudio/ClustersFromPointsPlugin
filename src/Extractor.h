@@ -117,6 +117,9 @@ protected:
 
 signals:
 
+    /** Signals that the extraction process finished */
+    void extracted();
+
     /**
      * Signals that the current dimension index changed
      * @param dimensionIndex Current dimension index

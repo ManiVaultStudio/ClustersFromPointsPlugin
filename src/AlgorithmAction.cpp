@@ -1,7 +1,7 @@
 #include "AlgorithmAction.h"
 #include "IdentifierExtractor.h"
 #include "StratificationExtractor.h"
-#include "CustomIntervalsExtractor.h"
+#include "IntervalsExtractor.h"
 #include "SettingsAction.h"
 #include "ClustersFromPointsPlugin.h"
 
@@ -31,7 +31,7 @@ AlgorithmAction::AlgorithmAction(SettingsAction& settingsAction) :
                 break;
 
             case ClustersFromPointsPlugin::Algorithm::Interval:
-                _extractor = SharedExtractor(new CustomIntervalsExtractor(_settingsAction.getAlgorithmAction()));
+                _extractor = SharedExtractor(new IntervalsExtractor(_settingsAction.getAlgorithmAction()));
                 break;
 
             default:

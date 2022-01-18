@@ -11,22 +11,22 @@
 
 using namespace hdps::gui;
 
-class CustomIntervalsExtractor;
+class IntervalsExtractor;
 
 /**
- * Custom intervals extractor settings action class
+ * Intervals extractor settings action class
  *
  * Action class for configuring custom intervals extractor parameters
  *
  * @author Thomas Kroes
  */
-class CustomIntervalsExtractorSettingsAction : public WidgetAction
+class IntervalsExtractorSettingsAction : public WidgetAction
 {
     Q_OBJECT
 
 public:
 
-    /** Widget class for custom intervals extractor settings action */
+    /** Widget class for intervals extractor settings action */
     class Widget : public WidgetActionWidget
     {
     protected:
@@ -34,20 +34,20 @@ public:
         /**
          * Constructor
          * @param parent Pointer to parent widget
-         * @param customIntervalsExtractorSettingsAction Pointer to custom intervals extractor settings action
+         * @param intervalsExtractorSettingsAction Pointer to intervals extractor settings action
          * @param widgetFlags Widget flags for the configuration of the widget
          */
-        Widget(QWidget* parent, CustomIntervalsExtractorSettingsAction* customIntervalsExtractorSettingsAction, const std::int32_t& widgetFlags);
+        Widget(QWidget* parent, IntervalsExtractorSettingsAction* intervalsExtractorSettingsAction, const std::int32_t& widgetFlags);
 
     protected:
 
-        friend class CustomIntervalsExtractorSettingsAction;
+        friend class IntervalsExtractorSettingsAction;
     };
 
 protected:
 
     /**
-     * Get widget representation of the custom intervals settings action
+     * Get widget representation of the intervals settings action
      * @param parent Pointer to parent widget
      * @param widgetFlags Widget flags for the configuration of the widget
      */
@@ -60,9 +60,9 @@ public:
 
     /**
      * Constructor
-     * @param customIntervalsExtractor Reference to custom intervals extractor
+     * @param intervalsExtractor Reference to intervals extractor
      */
-    CustomIntervalsExtractorSettingsAction(CustomIntervalsExtractor& customIntervalsExtractor);
+    IntervalsExtractorSettingsAction(IntervalsExtractor& intervalsExtractor);
 
 public: // Action getters
 
@@ -72,11 +72,11 @@ public: // Action getters
     TriggerAction& getAddClusterAction() { return _addClusterAction; }
 
 protected:
-    CustomIntervalsExtractor&   _customIntervalsExtractor;      /** Reference to custom intervals extractor */
-    DecimalRangeAction          _intervalAction;                /** Point value interval action */
-    IntegralAction              _numberOfPointsAction;          /** Number of clusters in point value range action */
-    StringAction                _clusterNameAction;             /** Cluster name action */
-    TriggerAction               _addClusterAction;              /** Add clusters action */
+    IntervalsExtractor&     _intervalsExtractor;        /** Reference to intervals extractor */
+    DecimalRangeAction      _intervalAction;            /** Point value interval action */
+    IntegralAction          _numberOfPointsAction;      /** Number of clusters in point value range action */
+    StringAction            _clusterNameAction;         /** Cluster name action */
+    TriggerAction           _addClusterAction;          /** Add clusters action */
 
     friend class StratificationExtractor;
 };
