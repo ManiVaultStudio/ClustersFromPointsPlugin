@@ -32,8 +32,8 @@ set(Extractor
     src/IdentifierExtractor.cpp
     src/StratificationExtractor.h
     src/StratificationExtractor.cpp
-    src/IntervalsExtractor.h
-    src/IntervalsExtractor.cpp
+    src/IntervalExtractor.h
+    src/IntervalExtractor.cpp
 )
 
 set(Actions
@@ -45,8 +45,8 @@ set(Actions
     src/IdentifierExtractorSettingsAction.cpp
     src/StratificationExtractorSettingsAction.h
     src/StratificationExtractorSettingsAction.cpp
-    src/IntervalsExtractorSettingsAction.h
-    src/IntervalsExtractorSettingsAction.cpp
+    src/IntervalExtractorSettingsAction.h
+    src/IntervalExtractorSettingsAction.cpp
 )
 
 set(AUX

@@ -1,5 +1,5 @@
-#include "IntervalsExtractorSettingsAction.h"
-#include "IntervalsExtractor.h"
+#include "IntervalExtractorSettingsAction.h"
+#include "IntervalExtractor.h"
 
 #include <Application.h>
 
@@ -7,9 +7,9 @@
 
 using namespace hdps;
 
-IntervalsExtractorSettingsAction::IntervalsExtractorSettingsAction(IntervalsExtractor& intervalsExtractor) :
-    WidgetAction(&intervalsExtractor),
-    _intervalsExtractor(intervalsExtractor),
+IntervalExtractorSettingsAction::IntervalExtractorSettingsAction(IntervalExtractor& intervalExtractor) :
+    WidgetAction(&intervalExtractor),
+    _intervalsExtractor(intervalExtractor),
     _intervalAction(this, "Point value range"),
     _numberOfPointsAction(this, "Number of points", 0, 1000000000)
 {
@@ -56,17 +56,17 @@ IntervalsExtractorSettingsAction::IntervalsExtractorSettingsAction(IntervalsExtr
     _intervalsExtractor.requestExtraction();
 }
 
-IntervalsExtractorSettingsAction::Widget::Widget(QWidget* parent, IntervalsExtractorSettingsAction* intervalsExtractorSettingsAction, const std::int32_t& widgetFlags) :
-    WidgetActionWidget(parent, intervalsExtractorSettingsAction, widgetFlags)
+IntervalExtractorSettingsAction::Widget::Widget(QWidget* parent, IntervalExtractorSettingsAction* intervalExtractorSettingsAction, const std::int32_t& widgetFlags) :
+    WidgetActionWidget(parent, intervalExtractorSettingsAction, widgetFlags)
 {
     auto layout = new QGridLayout();
 
-    layout->addWidget(intervalsExtractorSettingsAction->getRangeAction().getRangeMinAction().createLabelWidget(this), 0, 0);
-    layout->addWidget(intervalsExtractorSettingsAction->getRangeAction().getRangeMinAction().createWidget(this), 0, 1);
-    layout->addWidget(intervalsExtractorSettingsAction->getRangeAction().getRangeMaxAction().createLabelWidget(this), 1, 0);
-    layout->addWidget(intervalsExtractorSettingsAction->getRangeAction().getRangeMaxAction().createWidget(this), 1, 1);
-    layout->addWidget(intervalsExtractorSettingsAction->getNumberOfPointsAction().createLabelWidget(this), 2, 0);
-    layout->addWidget(intervalsExtractorSettingsAction->getNumberOfPointsAction().createWidget(this), 2, 1);
+    layout->addWidget(intervalExtractorSettingsAction->getRangeAction().getRangeMinAction().createLabelWidget(this), 0, 0);
+    layout->addWidget(intervalExtractorSettingsAction->getRangeAction().getRangeMinAction().createWidget(this), 0, 1);
+    layout->addWidget(intervalExtractorSettingsAction->getRangeAction().getRangeMaxAction().createLabelWidget(this), 1, 0);
+    layout->addWidget(intervalExtractorSettingsAction->getRangeAction().getRangeMaxAction().createWidget(this), 1, 1);
+    layout->addWidget(intervalExtractorSettingsAction->getNumberOfPointsAction().createLabelWidget(this), 2, 0);
+    layout->addWidget(intervalExtractorSettingsAction->getNumberOfPointsAction().createWidget(this), 2, 1);
 
     setPopupLayout(layout);
 }

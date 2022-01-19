@@ -1,7 +1,7 @@
 #include "AlgorithmAction.h"
 #include "IdentifierExtractor.h"
 #include "StratificationExtractor.h"
-#include "IntervalsExtractor.h"
+#include "IntervalExtractor.h"
 #include "SettingsAction.h"
 #include "ClustersFromPointsPlugin.h"
 
@@ -13,7 +13,7 @@ AlgorithmAction::AlgorithmAction(SettingsAction& settingsAction) :
     WidgetAction(&settingsAction),
     _settingsAction(settingsAction),
     _extractor(),
-    _currentAction(this, "Group by", { "Identifier", "Stratification", "Intervals" }, "Identifier", "Identifier")
+    _currentAction(this, "Group by", { "Identifier", "Stratification", "Interval" }, "Identifier", "Identifier")
 {
     setText("Group by");
     setMayReset(true);
@@ -31,7 +31,7 @@ AlgorithmAction::AlgorithmAction(SettingsAction& settingsAction) :
                 break;
 
             case ClustersFromPointsPlugin::Algorithm::Interval:
-                _extractor = SharedExtractor(new IntervalsExtractor(_settingsAction.getAlgorithmAction()));
+                _extractor = SharedExtractor(new IntervalExtractor(_settingsAction.getAlgorithmAction()));
                 break;
 
             default:

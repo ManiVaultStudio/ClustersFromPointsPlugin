@@ -1,14 +1,14 @@
-#include "IntervalsExtractor.h"
+#include "IntervalExtractor.h"
 #include "AlgorithmAction.h"
 
-IntervalsExtractor::IntervalsExtractor(AlgorithmAction& algorithmAction) :
+IntervalExtractor::IntervalExtractor(AlgorithmAction& algorithmAction) :
     Extractor(algorithmAction),
     _settingsAction(*this),
     _extractedCluster()
 {
 }
 
-void IntervalsExtractor::extract()
+void IntervalExtractor::extract()
 {
     // Only extract clusters from valid points dataset
     if (!getInputDataset().isValid())
@@ -60,17 +60,17 @@ void IntervalsExtractor::extract()
     QApplication::restoreOverrideCursor();
 }
 
-void IntervalsExtractor::postExtract()
+void IntervalExtractor::postExtract()
 {
     Extractor::postExtract();
 }
 
-WidgetAction& IntervalsExtractor::getSettingsAction()
+WidgetAction& IntervalExtractor::getSettingsAction()
 {
     return _settingsAction;
 }
 
-Cluster IntervalsExtractor::getCluster()
+Cluster IntervalExtractor::getCluster()
 {
     return _extractedCluster.copy();
 }

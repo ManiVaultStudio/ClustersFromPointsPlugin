@@ -1,16 +1,16 @@
 #pragma once
 
 #include "Extractor.h"
-#include "IntervalsExtractorSettingsAction.h"
+#include "IntervalExtractorSettingsAction.h"
 
 /**
- * Intervals extractor class
+ * Interval extractor class
  *
- * Extractor class for extracting clusters at user specified intervals
+ * Extractor class for extracting a cluster at a user specified interval
  *
  * @author Thomas Kroes
  */
-class IntervalsExtractor : public Extractor
+class IntervalExtractor : public Extractor
 {
 public:
 
@@ -18,7 +18,7 @@ public:
      * Constructor
      * @param algorithmAction Reference to algorithm action
      */
-    IntervalsExtractor(AlgorithmAction& algorithmAction);
+    IntervalExtractor(AlgorithmAction& algorithmAction);
 
     /** Extract clusters from points dataset and assign them to the clusters dataset */
     void extract() override;
@@ -39,6 +39,6 @@ public:
     Cluster getCluster();
 
 protected:
-    IntervalsExtractorSettingsAction    _settingsAction;        /** Settings action */
+    IntervalExtractorSettingsAction     _settingsAction;        /** Settings action */
     Cluster                             _extractedCluster;      /** Extracted cluster */
 };
