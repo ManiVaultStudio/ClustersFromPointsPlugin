@@ -7,9 +7,9 @@
 using namespace hdps::plugin;
 
 /**
- * Extract meta data plugin class
+ * Extract clusters from points plugin class
  *
- * Data transformation plugin class for extracting meta data (clusters) from points
+ * Data analysis plugin class for extracting clusters from points
  *
  * @author Thomas Kroes
  */
@@ -20,8 +20,8 @@ public:
     /** Data points are grouped into clusters based on */
     enum Algorithm {
         Identifier,         /** ...their numerical (integral) value */
-        Stratification,      /** ...in which stratum they belong */
-        Interval            /** ...in which interval(s) they belong */
+        Stratification,     /** ...in which stratum they belong */
+        Interval            /** ...in which user specified interval(s) they belong */
     };
 
 public:

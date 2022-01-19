@@ -81,7 +81,8 @@ AlgorithmAction::Widget::Widget(QWidget* parent, AlgorithmAction* algorithmActio
     const auto onChangeAlgorithm = [this, layout, algorithmAction]() -> void {
 
         // Remove existing settings tool button
-        layout->takeAt(1);
+        if (layout->count() == 2)
+            layout->takeAt(1);
 
         // Get extractor from algorithm
         auto extractor = algorithmAction->getExtractor();
@@ -92,7 +93,7 @@ AlgorithmAction::Widget::Widget(QWidget* parent, AlgorithmAction* algorithmActio
     };
 
     // Change settings widget when the algorithm changes
-    connect(&algorithmAction->getCurrentAction(), &OptionAction::currentIndexChanged, onChangeAlgorithm);
+    connect(&algorithmAction->getCurrentAction(), &OptionAction::currentIndexChanged, this, onChangeAlgorithm);
 
     // Do initial update
     onChangeAlgorithm();

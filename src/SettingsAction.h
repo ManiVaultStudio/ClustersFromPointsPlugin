@@ -18,7 +18,7 @@ class ClustersFromPointsPlugin;
 /**
  * Settings action class
  *
- * Action class for settings
+ * Primary action class for plugin settings
  *
  * @author Thomas Kroes
  */

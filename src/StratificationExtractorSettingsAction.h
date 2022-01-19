@@ -11,7 +11,7 @@ class StratificationExtractor;
 /**
  * Stratification extractor settings action class
  *
- * Action class for configuring stratification extractor parameters
+ * Action class for configuring stratification extractor settings
  *
  * @author Thomas Kroes
  */

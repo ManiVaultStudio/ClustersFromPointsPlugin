@@ -16,7 +16,7 @@ class SettingsAction;
 /**
  * Algorithm action class
  *
- * Action class for choosing and configuring an extractor
+ * Action class for choosing and configuring extractor settings
  *
  * @author Thomas Kroes
  */

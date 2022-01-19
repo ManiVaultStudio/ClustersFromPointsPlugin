@@ -12,7 +12,7 @@ class IdentifierExtractor;
 /**
  * Identifier extractor settings action class
  *
- * Action class for configuring identifier extractor parameters
+ * Action class for configuring identifier extractor settings
  *
  * @author Thomas Kroes
  */

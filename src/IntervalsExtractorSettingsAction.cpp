@@ -11,12 +11,13 @@ IntervalsExtractorSettingsAction::IntervalsExtractorSettingsAction(IntervalsExtr
     WidgetAction(&intervalsExtractor),
     _intervalsExtractor(intervalsExtractor),
     _intervalAction(this, "Point value range"),
-    _numberOfPointsAction(this, "Number of points", 0, 1000000000),
-    _clusterNameAction(this, "Cluster name"),
-    _addClusterAction(this, "Add cluster(s)")
+    _numberOfPointsAction(this, "Number of points", 0, 1000000000)
 {
     setIcon(Application::getIconFont("FontAwesome").getIcon("cog"));
     setText("Settings");
+
+    //_intervalAction.getRangeMinAction().setUpdateDuringDrag(false);
+    //_intervalAction.getRangeMaxAction().setUpdateDuringDrag(false);
 
     // Set the number of clusters action as read-only
     _numberOfPointsAction.setEnabled(false);
@@ -33,15 +34,7 @@ IntervalsExtractorSettingsAction::IntervalsExtractorSettingsAction(IntervalsExtr
 
     // Update actions post-extraction
     connect(&_intervalsExtractor, &Extractor::extracted, this, [this]() -> void {
-
-        // Establish the number of points
-        const auto numberOfPoints = _intervalsExtractor.getCandidateCluster().getNumberOfIndices();
-
-        // Update actions
-        _numberOfPointsAction.setValue(numberOfPoints);
-        _clusterNameAction.setEnabled(numberOfPoints >= 1);
-        _clusterNameAction.setString("[" + QString::number(_intervalAction.getMinimum()) + " - " + QString::number(_intervalAction.getMaximum()) + "]");
-        _addClusterAction.setEnabled(numberOfPoints >= 1);
+        _numberOfPointsAction.setValue(_intervalsExtractor.getCluster().getNumberOfIndices());
     });
 
     const auto updateDataRangeAction = [this]() -> void {
@@ -59,16 +52,6 @@ IntervalsExtractorSettingsAction::IntervalsExtractorSettingsAction(IntervalsExtr
     // Perform an initial update of the data range action
     updateDataRangeAction();
 
-    // Add cluster when the action is triggered
-    connect(&_addClusterAction, &TriggerAction::triggered, this, [this]() -> void {
-
-        // Update cluster name
-        _intervalsExtractor.getCandidateCluster().setName(_clusterNameAction.getString());
-
-        // Add clusters for the current configuration
-        _intervalsExtractor.addCluster(_intervalsExtractor.getCandidateCluster());
-    });
-
     // Perform an initial extraction
     _intervalsExtractor.requestExtraction();
 }
@@ -82,11 +65,8 @@ IntervalsExtractorSettingsAction::Widget::Widget(QWidget* parent, IntervalsExtra
     layout->addWidget(intervalsExtractorSettingsAction->getRangeAction().getRangeMinAction().createWidget(this), 0, 1);
     layout->addWidget(intervalsExtractorSettingsAction->getRangeAction().getRangeMaxAction().createLabelWidget(this), 1, 0);
     layout->addWidget(intervalsExtractorSettingsAction->getRangeAction().getRangeMaxAction().createWidget(this), 1, 1);
-    layout->addWidget(intervalsExtractorSettingsAction->getNumberOfClustersInRangeAction().createLabelWidget(this), 2, 0);
-    layout->addWidget(intervalsExtractorSettingsAction->getNumberOfClustersInRangeAction().createWidget(this), 2, 1);
-    layout->addWidget(intervalsExtractorSettingsAction->getClusterNameAction().createLabelWidget(this), 3, 0);
-    layout->addWidget(intervalsExtractorSettingsAction->getClusterNameAction().createWidget(this), 3, 1);
-    layout->addWidget(intervalsExtractorSettingsAction->getAddClusterAction().createWidget(this), 4, 1);
+    layout->addWidget(intervalsExtractorSettingsAction->getNumberOfPointsAction().createLabelWidget(this), 2, 0);
+    layout->addWidget(intervalsExtractorSettingsAction->getNumberOfPointsAction().createWidget(this), 2, 1);
 
     setPopupLayout(layout);
 }

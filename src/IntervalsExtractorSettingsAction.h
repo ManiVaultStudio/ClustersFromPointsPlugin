@@ -16,7 +16,7 @@ class IntervalsExtractor;
 /**
  * Intervals extractor settings action class
  *
- * Action class for configuring custom intervals extractor parameters
+ * Action class for configuring custom intervals extractor settings
  *
  * @author Thomas Kroes
  */
@@ -67,16 +67,12 @@ public:
 public: // Action getters
 
     DecimalRangeAction& getRangeAction() { return _intervalAction; }
-    IntegralAction& getNumberOfClustersInRangeAction() { return _numberOfPointsAction; }
-    StringAction& getClusterNameAction() { return _clusterNameAction; }
-    TriggerAction& getAddClusterAction() { return _addClusterAction; }
+    IntegralAction& getNumberOfPointsAction() { return _numberOfPointsAction; }
 
 protected:
     IntervalsExtractor&     _intervalsExtractor;        /** Reference to intervals extractor */
     DecimalRangeAction      _intervalAction;            /** Point value interval action */
     IntegralAction          _numberOfPointsAction;      /** Number of clusters in point value range action */
-    StringAction            _clusterNameAction;         /** Cluster name action */
-    TriggerAction           _addClusterAction;          /** Add clusters action */
 
     friend class StratificationExtractor;
 };

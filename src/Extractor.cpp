@@ -13,7 +13,7 @@ Extractor::Extractor(AlgorithmAction& algorithmAction) :
 {
     // Configure extraction timer
     _extractTimer.setSingleShot(true);
-    _extractTimer.setInterval(100);
+    _extractTimer.setInterval(250);
 
     // Perform the extract process when the timer times out
     connect(&_extractTimer, &QTimer::timeout, [this]() {
@@ -25,11 +25,6 @@ Extractor::Extractor(AlgorithmAction& algorithmAction) :
         // Inform others that the extraction process finished
         emit extracted();
     });
-
-    // Update the clusters when the clusters model layout changes
-    //connect(&getClustersModel(), &QAbstractItemModel::layoutChanged, this, [this]() {
-    //    setClusters(getClustersModel().getClusters());
-    //});
 }
 
 void Extractor::requestExtraction()
@@ -69,6 +64,8 @@ void Extractor::addCluster(const Cluster& cluster)
 
     // Notify others that the clusters changed
     Application::core()->notifyDataChanged(clustersDataset);
+
+    _algorithmAction.getSettingsAction().getClustersAction().getColorizeClustersAction().getColorizeAction().trigger();
 }
 
 void Extractor::resetClusters()

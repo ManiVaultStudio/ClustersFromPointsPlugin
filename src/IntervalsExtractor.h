@@ -6,7 +6,7 @@
 /**
  * Intervals extractor class
  *
- * Extractor class for extracting clusters at custom intervals
+ * Extractor class for extracting clusters at user specified intervals
  *
  * @author Thomas Kroes
  */
@@ -33,12 +33,12 @@ public:
     WidgetAction& getSettingsAction() override;
 
     /**
-     * Get candidate cluster (will be added to the clusters dataset when the add cluster action is triggered)
-     * @return Reference to candidate cluster
+     * Get candidate cluster
+     * @return Copy of the extracted cluster (copy is required for identifier uniqueness)
      */
-    Cluster& getCandidateCluster();
+    Cluster getCluster();
 
 protected:
     IntervalsExtractorSettingsAction    _settingsAction;        /** Settings action */
-    Cluster                             _candidateCluster;      /** Candidate cluster */
+    Cluster                             _extractedCluster;      /** Extracted cluster */
 };

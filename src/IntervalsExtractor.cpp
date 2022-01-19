@@ -1,13 +1,10 @@
 #include "IntervalsExtractor.h"
 #include "AlgorithmAction.h"
 
-#include <vector>
-#include <numeric>
-
 IntervalsExtractor::IntervalsExtractor(AlgorithmAction& algorithmAction) :
     Extractor(algorithmAction),
     _settingsAction(*this),
-    _candidateCluster()
+    _extractedCluster()
 {
 }
 
@@ -20,7 +17,7 @@ void IntervalsExtractor::extract()
     QApplication::setOverrideCursor(Qt::WaitCursor);
     {
         // Points within the range
-        QVector<std::uint32_t> indicesInRange;
+        std::vector<std::uint32_t> indicesInRange;
 
         // Reserve space for the cluster indices
         indicesInRange.reserve(getInputDataset()->getNumPoints());
@@ -39,15 +36,26 @@ void IntervalsExtractor::extract()
             }
 
             // Only add cluster when there are one or more cluster indices
-            if (indicesInRange.isEmpty())
+            if (indicesInRange.empty())
                 return;
-
-            // Establish cluster name
-            const auto clusterName = "[" + QString::number(_settingsAction.getRangeAction().getMinimum()) + " - " + QString::number(_settingsAction.getRangeAction().getMaximum()) + "]";
-
-            // Update candidate cluster
-            _candidateCluster = Cluster(clusterName, Qt::gray, std::vector<std::uint32_t>(indicesInRange.begin(), indicesInRange.end()));
         });
+
+        // Update candidate cluster
+        _extractedCluster.setName("[" + QString::number(_settingsAction.getRangeAction().getMinimum()) + " - " + QString::number(_settingsAction.getRangeAction().getMaximum()) + "]");
+        _extractedCluster.setIndices(indicesInRange);
+
+        // Ensure that the cluster exists in the clusters dataset
+        if (getClustersDataset()->getClusters().isEmpty())
+            addCluster(_extractedCluster);
+
+        // Transfer extracted cluster to clusters dataset
+        getClustersDataset()->getClusters().first() = _extractedCluster;
+
+        // Notify others that the clusters changed
+        Application::core()->notifyDataChanged(getClustersDataset());
+
+        // Select points in the cluster
+        getClustersDataset()->setSelectionIndices({ 0 });
     }
     QApplication::restoreOverrideCursor();
 }
@@ -62,7 +70,7 @@ WidgetAction& IntervalsExtractor::getSettingsAction()
     return _settingsAction;
 }
 
-Cluster& IntervalsExtractor::getCandidateCluster()
+Cluster IntervalsExtractor::getCluster()
 {
-    return _candidateCluster;
+    return _extractedCluster.copy();
 }
