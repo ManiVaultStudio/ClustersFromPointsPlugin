@@ -15,7 +15,7 @@ AlgorithmAction::AlgorithmAction(SettingsAction& settingsAction) :
     _extractor(),
     _currentAction(this, "Group by", { "Identifier", "Stratification", "Interval" }, "Identifier", "Identifier")
 {
-    setText("Group by");
+    setText("Group by"); 
     setMayReset(true);
 
     // Change extractor
