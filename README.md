@@ -9,7 +9,7 @@ This analysis plugin is used to extract clusters from points using various extra
 ## Usage
 This plugin produces a single clusters dataset and continuously updates the clusters as parameters are changed. Please follow these steps to generate clusters:
 - Right-click a points dataset in the data hierarchy
-- Choose Analyze > Clusters from points
+- Choose Analyze > Extract clusters from points
 - Enter the name of the target clusters dataset
 - Choose the extraction dimension
 - Pick a grouping algorithm
