@@ -1,7 +1,7 @@
 # Clusters from points plugin
 ![Screenshot of the clusters from points plugin user interface](res/images/screenshot.png)
 
-This analysis plugin is used to extract clusters from points using various extraction algorithms. Points are grouped (clustered) based on their numerical value for a user specified dimension. In its current state, the point values can be grouped by:
+This analysis plugin is used to derive clusters from points using various extraction algorithms. Points are grouped (clustered) based on their numerical value for a user specified dimension. In its current state, the point values can be grouped by:
   - their rounded numerical value (Identifier)
   - in which interval they fall (Stratifaction)
   - a user defined interval (Interval)
