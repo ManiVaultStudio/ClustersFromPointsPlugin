@@ -7,7 +7,6 @@
 #include <actions/ToggleAction.h>
 #include <actions/IntegralAction.h>
 
-#include <PointsDimensionPickerAction.h>
 #include <ClusterData.h>
 #include <ClustersAction.h>
 
@@ -46,15 +45,13 @@ public:
 
 public: // Action getters
 
-    PointsDimensionPickerAction& getDimensionAction() { return _dimensionAction; }
     AlgorithmAction& getAlgorithmAction() { return _algorithmAction; }
     ClustersAction& getClustersAction() { return _clustersAction; }
     IntegralAction& getNumberOfClustersAction() { return _numberOfClustersAction; }
 
 protected:
-    ClustersFromPointsPlugin*       _clustersFromPointsPlugin;      /** Pointer to the clusters from points plugin */
-    PointsDimensionPickerAction     _dimensionAction;               /** Current dimension action */
-    ClustersAction                  _clustersAction;                /** Clusters action */
-    AlgorithmAction                 _algorithmAction;               /** Algorithm action */
-    IntegralAction                  _numberOfClustersAction;        /** Number of clusters action */
+    ClustersFromPointsPlugin*   _clustersFromPointsPlugin;      /** Pointer to the clusters from points plugin */
+    ClustersAction              _clustersAction;                /** Clusters action */
+    AlgorithmAction             _algorithmAction;               /** Algorithm action */
+    IntegralAction              _numberOfClustersAction;        /** Number of clusters action */
 };

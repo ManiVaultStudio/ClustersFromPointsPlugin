@@ -7,9 +7,7 @@ using namespace hdps;
 Extractor::Extractor(AlgorithmAction& algorithmAction) :
     QObject(&algorithmAction),
     _algorithmAction(algorithmAction),
-    _dimensionIndex(0),
-    _extractTimer(),
-    _dataRange(0.0f, 0.0f)
+    _extractTimer()
 {
     // Configure extraction timer
     _extractTimer.setSingleShot(true);
@@ -80,57 +78,6 @@ void Extractor::resetClusters()
     Application::core()->notifyDataChanged(clustersDataset);
 }
 
-void Extractor::setDimensionIndex(std::int32_t dimensionIndex)
-{
-    _dimensionIndex = dimensionIndex;
-
-    // Dimension change invalidates the clusters
-    resetClusters();
-
-    // Update the data range
-    updateDataRange();
-
-    // Notify others that the current dimension index changed
-    emit dimensionIndexChanged(_dimensionIndex);
-}
-
-void Extractor::updateDataRange()
-{
-    // Only extract clusters from valid points dataset
-    if (!getInputDataset().isValid())
-        return;
-
-    // Minimum and maximum for the current dimension
-    _dataRange.first = std::numeric_limits<float>::max();
-    _dataRange.second = std::numeric_limits<float>::lowest();
-
-    getInputDataset()->visitData([this](auto pointData) {
-
-        // Compute point value range
-        for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(getInputDataset()->getNumPoints()); pointIndex++) {
-
-            // Get point value for the dimension
-            const auto pointValue = pointData[pointIndex][_dimensionIndex];
-
-            // Compute minimum
-            if (pointValue < _dataRange.first)
-                _dataRange.first = pointValue;
-
-            // Compute maximum
-            if (pointValue > _dataRange.second)
-                _dataRange.second = pointValue;
-        }
-    });
-
-    // Notify others that the data range changed
-    emit dataRangeChanged(_dataRange);
-}
-
-QPair<float, float> Extractor::getDataRange() const
-{
-    return _dataRange;
-}
-
 Dataset<Points> Extractor::getInputDataset()
 {
     return _algorithmAction.getSettingsAction().getInputDataset();
@@ -153,7 +100,6 @@ Dataset<Clusters> Extractor::getClustersDataset() const
 
 void Extractor::postExtract()
 {
-    // Colorize the clusters
     _algorithmAction.getSettingsAction().getClustersAction().getColorizeClustersAction().getColorizeAction().trigger();
 }
 

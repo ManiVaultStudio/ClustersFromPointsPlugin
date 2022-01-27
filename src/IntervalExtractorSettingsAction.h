@@ -7,6 +7,8 @@
 #include <actions/StringAction.h>
 #include <actions/TriggerAction.h>
 
+#include <DimensionPickerAction.h>
+
 #include <ClusterData.h>
 
 using namespace hdps::gui;
@@ -64,15 +66,17 @@ public:
      */
     IntervalExtractorSettingsAction(IntervalExtractor& intervalExtractor);
 
-public: // Action getters
+protected: // Action getters
 
+    DimensionPickerAction& getDimensionAction() { return _dimensionAction; }
     DecimalRangeAction& getRangeAction() { return _intervalAction; }
     IntegralAction& getNumberOfPointsAction() { return _numberOfPointsAction; }
 
 protected:
-    IntervalExtractor&      _intervalsExtractor;        /** Reference to interval extractor */
+    IntervalExtractor&      _intervalExtractor;        /** Reference to interval extractor */
+    DimensionPickerAction   _dimensionAction;           /** Current dimension action */
     DecimalRangeAction      _intervalAction;            /** Point value interval action */
     IntegralAction          _numberOfPointsAction;      /** Number of clusters in point value range action */
 
-    friend class StratificationExtractor;
+    friend class IntervalExtractor;
 };

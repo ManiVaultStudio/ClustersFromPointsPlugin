@@ -4,15 +4,17 @@
 
 #include <ClustersAction.h>
 
+#include <omp.h>
+
 IdentifierExtractor::IdentifierExtractor(AlgorithmAction& algorithmAction) :
     Extractor(algorithmAction),
     _settingsAction(*this)
 {
-    // Request an extraction when the current dimension index changes
-    connect(this, &Extractor::dimensionIndexChanged, this, &Extractor::requestExtraction);
+    // Update dimension picker action
+    _settingsAction.getDimensionAction().setPointsDataset(getInputDataset());
 
-    // Request an initial extraction
-    requestExtraction();
+    // Request an extraction when the current dimension index changes
+    connect(&_settingsAction.getDimensionAction(), &DimensionPickerAction::currentDimensionIndexChanged, this, &Extractor::requestExtraction);
 }
 
 void IdentifierExtractor::extract()
@@ -30,11 +32,19 @@ void IdentifierExtractor::extract()
         QVector<Cluster> clusters;
 
         getInputDataset()->visitData([this, &clusters, &clustersMap](auto pointData) {
+
+            // Get current dimension index
+            const auto currentDimensionIndex = _settingsAction.getDimensionAction().getCurrentDimensionIndex();
+
+            // Get cluster name prefix
+            const auto prefix = _algorithmAction.getSettingsAction().getClustersAction().getPrefixClustersAction().getPrefixAction().getString();
+
+            //#pragma omp parallel for schedule(dynamic,1)
             for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(getInputDataset()->getNumPoints()); pointIndex++) {
-                const auto clusterIndex = static_cast<std::uint32_t>(pointData[pointIndex][_dimensionIndex]);
+                const auto clusterIndex = static_cast<std::uint32_t>(pointData[pointIndex][currentDimensionIndex]);
 
                 if (!clustersMap.contains(clusterIndex)) {
-                    clusters.append(Cluster());
+                    clusters.append(Cluster(prefix + QString::number(clusterIndex)));
                     clustersMap[clusterIndex] = static_cast<std::uint32_t>(clusters.size()) - 1;
                 }
 
@@ -52,9 +62,6 @@ void IdentifierExtractor::extract()
 void IdentifierExtractor::postExtract()
 {
     Extractor::postExtract();
-
-    // Provide each cluster with a prefix
-    _algorithmAction.getSettingsAction().getClustersAction().getPrefixClustersAction().getApplyAction().trigger();
 }
 
 WidgetAction& IdentifierExtractor::getSettingsAction()

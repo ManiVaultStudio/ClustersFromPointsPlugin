@@ -63,21 +63,6 @@ public:
     void resetClusters();
 
     /**
-     * Set the dimension index
-     * @param dimensionIndex Index of the dimension to extract the meta data from
-     */
-    void setDimensionIndex(std::int32_t dimensionIndex);
-
-    /** Update the data range for the current dimension */
-    void updateDataRange();
-
-    /**
-     * Get data range of points for the current dimension\
-     * @return Data range as pair
-     */
-    QPair<float, float> getDataRange() const;
-
-    /**
      * Get input dataset
      * @return Smart pointer to input points dataset
      */
@@ -120,23 +105,9 @@ signals:
     /** Signals that the extraction process finished */
     void extracted();
 
-    /**
-     * Signals that the current dimension index changed
-     * @param dimensionIndex Current dimension index
-     */
-    void dimensionIndexChanged(std::int32_t dimensionIndex);
-
-    /**
-     * Signals that the data range changed
-     * @param clusters Clusters
-     */
-    void dataRangeChanged(const QPair<float, float>& dataRange);
-
 protected:
-    AlgorithmAction&        _algorithmAction;   /** Reference to algorithm action */
-    std::int32_t            _dimensionIndex;    /** Index of the dimension to extract the meta data from */
-    QTimer                  _extractTimer;      /** Timer to prevent unnecessary updates */
-    QPair<float, float>     _dataRange;         /** Data range for the dimension */
+    AlgorithmAction&    _algorithmAction;   /** Reference to algorithm action */
+    QTimer              _extractTimer;      /** Timer to prevent unnecessary updates */
 };
 
 using SharedExtractor = QSharedPointer<Extractor>;

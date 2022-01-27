@@ -6,6 +6,8 @@ IntervalExtractor::IntervalExtractor(AlgorithmAction& algorithmAction) :
     _settingsAction(*this),
     _extractedCluster()
 {
+    // Update dimension picker action
+    _settingsAction.getDimensionAction().setPointsDataset(getInputDataset());
 }
 
 void IntervalExtractor::extract()
@@ -16,6 +18,9 @@ void IntervalExtractor::extract()
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
     {
+        // Remove existing clusters
+        resetClusters();
+
         // Points within the range
         std::vector<std::uint32_t> indicesInRange;
 
@@ -24,11 +29,14 @@ void IntervalExtractor::extract()
 
         getInputDataset()->visitData([this, &indicesInRange](auto pointData) {
 
+            // Get current dimension index
+            const auto currentDimensionIndex = _settingsAction.getDimensionAction().getCurrentDimensionIndex();
+
             // Add each point when it is in the current interval
             for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(getInputDataset()->getNumPoints()); pointIndex++) {
 
                 // Get point value
-                const auto pointValue = pointData[pointIndex][_dimensionIndex];
+                const auto pointValue = pointData[pointIndex][currentDimensionIndex];
 
                 // And add it to the indices when it resides in the interval
                 if (pointValue >= _settingsAction.getRangeAction().getMinimum() && pointValue <= _settingsAction.getRangeAction().getMaximum())
@@ -73,4 +81,41 @@ WidgetAction& IntervalExtractor::getSettingsAction()
 Cluster IntervalExtractor::getCluster()
 {
     return _extractedCluster.copy();
+}
+
+QPair<float, float> IntervalExtractor::getDataRange() const
+{
+    return _dataRange;
+}
+
+void IntervalExtractor::updateDataRange()
+{
+    // Only extract clusters from valid points dataset
+    if (!getInputDataset().isValid())
+        return;
+
+    // Minimum and maximum for the current dimension
+    _dataRange.first    = std::numeric_limits<float>::max();
+    _dataRange.second   = std::numeric_limits<float>::lowest();
+
+    getInputDataset()->visitData([this](auto pointData) {
+
+        // Compute point value range
+        for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(getInputDataset()->getNumPoints()); pointIndex++) {
+
+            // Get point value for the dimension
+            const auto pointValue = pointData[pointIndex][_settingsAction.getDimensionAction().getCurrentDimensionIndex()];
+
+            // Compute minimum
+            if (pointValue < _dataRange.first)
+                _dataRange.first = pointValue;
+
+            // Compute maximum
+            if (pointValue > _dataRange.second)
+                _dataRange.second = pointValue;
+        }
+    });
+
+    // Notify others that the data range changed
+    emit dataRangeChanged(_dataRange);
 }

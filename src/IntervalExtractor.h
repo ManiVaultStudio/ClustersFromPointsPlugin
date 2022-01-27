@@ -10,8 +10,10 @@
  *
  * @author Thomas Kroes
  */
-class IntervalExtractor : public Extractor
+class IntervalExtractor final : public Extractor
 {
+    Q_OBJECT
+
 public:
 
     /**
@@ -38,7 +40,25 @@ public:
      */
     Cluster getCluster();
 
+    /**
+     * Get data range of points for the current dimension\
+     * @return Data range as pair
+     */
+    QPair<float, float> getDataRange() const;
+
+    /** Update the data range for the current dimension */
+    void updateDataRange();
+
+signals:
+
+    /**
+     * Signals that the data range changed
+     * @param dataRange Range of the data
+     */
+    void dataRangeChanged(const QPair<float, float>& dataRange);
+
 protected:
     IntervalExtractorSettingsAction     _settingsAction;        /** Settings action */
     Cluster                             _extractedCluster;      /** Extracted cluster */
+    QPair<float, float>                 _dataRange;             /** Data range for the current dimension */
 };
