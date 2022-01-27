@@ -1,16 +1,16 @@
 #pragma once
 
 #include "Extractor.h"
-#include "IdentifierExtractorSettingsAction.h"
+#include "IndexExtractorSettingsAction.h"
 
 /**
- * Identifier extractor class
+ * Index extractor class
  *
- * Extractor class for grouping points based on their integral point value
+ * Extractor class for grouping points based on their point index
  *
  * @author Thomas Kroes
  */
-class IdentifierExtractor final : public Extractor
+class IndexExtractor final : public Extractor
 {
 public:
 
@@ -18,7 +18,7 @@ public:
      * Constructor
      * @param algorithmAction Reference to algorithm action
      */
-    IdentifierExtractor(AlgorithmAction& algorithmAction);
+    IndexExtractor(AlgorithmAction& algorithmAction);
 
     /** Extract clusters from points dataset and assign them to the clusters dataset */
     void extract() override;
@@ -33,5 +33,5 @@ public:
     WidgetAction& getSettingsAction() override;
 
 protected:
-    IdentifierExtractorSettingsAction   _settingsAction;    /** Settings action */
+    IndexExtractorSettingsAction   _settingsAction;    /** Settings action */
 };

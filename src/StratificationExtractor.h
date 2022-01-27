@@ -10,8 +10,10 @@
  *
  * @author Thomas Kroes
  */
-class StratificationExtractor : public Extractor
+class StratificationExtractor final : public Extractor
 {
+    Q_OBJECT
+
 public:
 
     /**
@@ -32,6 +34,18 @@ public:
      */
     WidgetAction& getSettingsAction() override;
 
+    /** Update the data range for the current dimension */
+    void updateDataRange();
+
+signals:
+
+    /**
+     * Signals that the data range changed
+     * @param dataRange Range of the data
+     */
+    void dataRangeChanged(const QPair<float, float>& dataRange);
+
 protected:
-    StratificationExtractorSettingsAction    _settingsAction;   /** Settings action */
+    StratificationExtractorSettingsAction    _settingsAction;       /** Settings action */
+    QPair<float, float>                     _dataRange;             /** Data range for the current dimension */
 };

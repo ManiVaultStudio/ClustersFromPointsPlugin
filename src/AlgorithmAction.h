@@ -79,6 +79,17 @@ public:
      */
     SharedExtractor getExtractor();
 
+    /** Initializes the algorithm action */
+    void init();
+
+signals:
+
+    /**
+     * Signals that the current extractor changed
+     * @param extractor Pointer to extractor
+     */
+    void extractorChanged(Extractor* extractor);
+
 public: // Action getters
 
     SettingsAction& getSettingsAction() { return _settingsAction; };

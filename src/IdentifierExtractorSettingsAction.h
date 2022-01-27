@@ -5,6 +5,8 @@
 #include <actions/StringAction.h>
 #include <actions/TriggerAction.h>
 
+#include <DimensionPickerAction.h>
+
 using namespace hdps::gui;
 
 class IdentifierExtractor;
@@ -62,8 +64,11 @@ public:
 
 protected: // Action getters
 
-protected:
-    IdentifierExtractor&    _identifierExtractor;   /** Reference to identifier extractor */
+    DimensionPickerAction& getDimensionAction() { return _dimensionAction; }
 
+protected:
+    IdentifierExtractor&    _identifierExtractor;       /** Reference to identifier extractor */
+    DimensionPickerAction   _dimensionAction;           /** Current dimension action */
+    
     friend class IdentifierExtractor;
 };

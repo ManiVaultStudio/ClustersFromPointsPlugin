@@ -8,8 +8,17 @@ StratificationExtractor::StratificationExtractor(AlgorithmAction& algorithmActio
     Extractor(algorithmAction),
     _settingsAction(*this)
 {
-    // Request an extraction when the current dimension index changes
-    connect(this, &Extractor::dimensionIndexChanged, this, &Extractor::requestExtraction);
+    // Update dimension picker action
+    _settingsAction.getDimensionAction().setPointsDataset(getInputDataset());
+
+    // Request extraction when the current dimension changes
+    connect(&_settingsAction.getDimensionAction(), &DimensionPickerAction::currentDimensionIndexChanged, this, [this](const std::int32_t& currentDimensionIndex) {
+        updateDataRange();
+        requestExtraction();
+    });
+
+    updateDataRange();
+    requestExtraction();
 }
 
 void StratificationExtractor::extract()
@@ -31,11 +40,14 @@ void StratificationExtractor::extract()
 
         getInputDataset()->visitData([this, &clusters, &minimum, &maximum, &strata](auto pointData) {
 
+            // Get current dimension index
+            const auto currentDimensionIndex = _settingsAction.getDimensionAction().getCurrentDimensionIndex();
+
             // Compute point value range
             for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(getInputDataset()->getNumPoints()); pointIndex++) {
 
                 // Get point value for the dimension
-                const auto pointValue = pointData[pointIndex][_dimensionIndex];
+                const auto pointValue = pointData[pointIndex][currentDimensionIndex];
 
                 // Compute minimum
                 if (pointValue < minimum)
@@ -65,7 +77,7 @@ void StratificationExtractor::extract()
             for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(getInputDataset()->getNumPoints()); pointIndex++) {
 
                 // Get point value and determine stratum index
-                const auto pointValue = pointData[pointIndex][_dimensionIndex];
+                const auto pointValue = pointData[pointIndex][currentDimensionIndex];
                 const auto binIndex = std::min(strata.count() - 1, static_cast<std::int32_t>(floorf(pointValue / stratumLength)));
 
                 // Add index to stratum
@@ -105,4 +117,36 @@ void StratificationExtractor::postExtract()
 WidgetAction& StratificationExtractor::getSettingsAction()
 {
     return _settingsAction;
+}
+
+void StratificationExtractor::updateDataRange()
+{
+    // Only extract clusters from valid points dataset
+    if (!getInputDataset().isValid())
+        return;
+
+    // Minimum and maximum for the current dimension
+    _dataRange.first    = std::numeric_limits<float>::max();
+    _dataRange.second   = std::numeric_limits<float>::lowest();
+
+    getInputDataset()->visitData([this](auto pointData) {
+
+        // Compute point value range
+        for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(getInputDataset()->getNumPoints()); pointIndex++) {
+
+            // Get point value for the dimension
+            const auto pointValue = pointData[pointIndex][_settingsAction.getDimensionAction().getCurrentDimensionIndex()];
+
+            // Compute minimum
+            if (pointValue < _dataRange.first)
+                _dataRange.first = pointValue;
+
+            // Compute maximum
+            if (pointValue > _dataRange.second)
+                _dataRange.second = pointValue;
+        }
+    });
+
+    // Notify other that the data range changed
+    emit dataRangeChanged(_dataRange);
 }

@@ -20,9 +20,13 @@ public:
     /** Data points are grouped into clusters based on */
     enum Algorithm {
         Identifier,         /** ...their numerical (integral) value */
+        Index,              /** ...their point index */
         Stratification,     /** ...in which stratum they belong */
         Interval            /** ...in which user specified interval(s) they belong */
     };
+
+    /** Maps algorithm enum to name string */
+    static const QMap<Algorithm, QString> algorithmNames;
 
 public:
 

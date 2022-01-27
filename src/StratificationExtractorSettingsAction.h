@@ -4,6 +4,8 @@
 #include <actions/WidgetActionWidget.h>
 #include <actions/IntegralAction.h>
 
+#include <DimensionPickerAction.h>
+
 using namespace hdps::gui;
 
 class StratificationExtractor;
@@ -61,10 +63,12 @@ public:
 
 protected: // Action getters
 
+    DimensionPickerAction& getDimensionAction() { return _dimensionAction; }
     IntegralAction& getNumberOfStrataAction() { return _numberOfStrataAction; }
 
 protected:
     StratificationExtractor&    _stratificationExtractor;   /** Reference to stratification extractor */
+    DimensionPickerAction       _dimensionAction;           /** Current dimension action */
     IntegralAction              _numberOfStrataAction;      /** Number of bins action */
 
     friend class StratificationExtractor;
