@@ -6,8 +6,6 @@
 
 #include <util/Timer.h>
 
-#include <omp.h>
-
 IndexExtractor::IndexExtractor(AlgorithmAction& algorithmAction) :
     Extractor(algorithmAction),
     _settingsAction(*this)

@@ -4,8 +4,6 @@
 
 #include <ClustersAction.h>
 
-#include <omp.h>
-
 IdentifierExtractor::IdentifierExtractor(AlgorithmAction& algorithmAction) :
     Extractor(algorithmAction),
     _settingsAction(*this)
