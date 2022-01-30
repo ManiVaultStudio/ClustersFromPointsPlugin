@@ -45,3 +45,8 @@ Dataset<Clusters> SettingsAction::getClustersDataset()
 {
     return _clustersFromPointsPlugin->getOutputDataset();
 }
+
+ClustersFromPointsPlugin& SettingsAction::getClustersFromPointsPlugin()
+{
+    return *_clustersFromPointsPlugin;
+}

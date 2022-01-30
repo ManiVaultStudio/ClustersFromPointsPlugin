@@ -9,6 +9,7 @@
 using namespace hdps::plugin;
 using namespace hdps::gui;
 
+class ClustersFromPointsPlugin;
 class AlgorithmAction;
 class ClustersModel;
 
@@ -85,6 +86,12 @@ public:
      * @return Smart pointer to clusters dataset
      */
     hdps::Dataset<Clusters> getClustersDataset() const;
+
+    /**
+     * Get clusters from points plugin
+     * @return Reference to clusters from points plugin
+     */
+    ClustersFromPointsPlugin& getClustersFromPointsPlugin();
 
 protected:
 

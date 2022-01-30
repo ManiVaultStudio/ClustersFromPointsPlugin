@@ -20,16 +20,6 @@ AlgorithmAction::AlgorithmAction(SettingsAction& settingsAction) :
     setMayReset(true);
 }
 
-bool AlgorithmAction::isResettable() const
-{
-    return _currentAction.isResettable();
-}
-
-void AlgorithmAction::reset()
-{
-    _currentAction.reset();
-}
-
 SharedExtractor AlgorithmAction::getExtractor()
 {
     return _extractor;

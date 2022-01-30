@@ -98,6 +98,11 @@ Dataset<Clusters> Extractor::getClustersDataset() const
     return const_cast<Extractor*>(this)->getClustersDataset();
 }
 
+ClustersFromPointsPlugin& Extractor::getClustersFromPointsPlugin()
+{
+    return _algorithmAction.getSettingsAction().getClustersFromPointsPlugin();
+}
+
 void Extractor::postExtract()
 {
     _algorithmAction.getSettingsAction().getClustersAction().getColorizeClustersAction().getColorizeAction().trigger();
