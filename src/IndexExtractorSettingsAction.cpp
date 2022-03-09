@@ -16,7 +16,6 @@ IndexExtractorSettingsAction::IndexExtractorSettingsAction(IndexExtractor& index
 
     _startIndexAction.setUpdateDuringDrag(false);
     _startIndexAction.setDefaultWidgetFlags(IntegralAction::SpinBox);
-    _startIndexAction.setSettingsPrefix("/StartIndex", &_indexExtractor.getClustersFromPointsPlugin());
 
     // Request extraction when the start index changes
     connect(&_startIndexAction, &IntegralAction::valueChanged, &_indexExtractor, &IndexExtractor::requestExtraction);
