@@ -1,5 +1,6 @@
 #include "IndexExtractorSettingsAction.h"
 #include "IndexExtractor.h"
+#include "ClustersFromPointsPlugin.h"
 
 #include <Application.h>
 

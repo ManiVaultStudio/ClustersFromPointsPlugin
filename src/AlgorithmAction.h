@@ -64,12 +64,6 @@ public:
      */
     AlgorithmAction(SettingsAction& settingsAction);
 
-    /** Determines whether the action can be reset */
-    bool isResettable() const override;
-
-    /** Reset to default */
-    void reset() override;
-
     /** Extract the clusters from the input points */
     void extractClusters();
 

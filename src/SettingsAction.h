@@ -43,6 +43,12 @@ public:
      */
     Dataset<Clusters> getClustersDataset();
 
+    /**
+     * Get clusters from points plugin
+     * @return Reference to clusters from points plugin
+     */
+    ClustersFromPointsPlugin& getClustersFromPointsPlugin();
+
 public: // Action getters
 
     AlgorithmAction& getAlgorithmAction() { return _algorithmAction; }

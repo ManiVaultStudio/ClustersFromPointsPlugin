@@ -49,7 +49,7 @@ void Extractor::setClusters(const QVector<Cluster>& clusters)
     clustersDataset->getClusters() = clusters;
 
     // Notify others that the clusters changed
-    Application::core()->notifyDataChanged(clustersDataset);
+    Application::core()->notifyDatasetChanged(clustersDataset);
 }
 
 void Extractor::addCluster(const Cluster& cluster)
@@ -61,7 +61,7 @@ void Extractor::addCluster(const Cluster& cluster)
     clustersDataset->getClusters() << cluster;
 
     // Notify others that the clusters changed
-    Application::core()->notifyDataChanged(clustersDataset);
+    Application::core()->notifyDatasetChanged(clustersDataset);
 
     _algorithmAction.getSettingsAction().getClustersAction().getColorizeClustersAction().getColorizeAction().trigger();
 }
@@ -75,7 +75,7 @@ void Extractor::resetClusters()
     clustersDataset->getClusters().clear();
 
     // Notify others that the clusters changed
-    Application::core()->notifyDataChanged(clustersDataset);
+    Application::core()->notifyDatasetChanged(clustersDataset);
 }
 
 Dataset<Points> Extractor::getInputDataset()
@@ -96,6 +96,11 @@ Dataset<Clusters> Extractor::getClustersDataset()
 Dataset<Clusters> Extractor::getClustersDataset() const
 {
     return const_cast<Extractor*>(this)->getClustersDataset();
+}
+
+ClustersFromPointsPlugin& Extractor::getClustersFromPointsPlugin()
+{
+    return _algorithmAction.getSettingsAction().getClustersFromPointsPlugin();
 }
 
 void Extractor::postExtract()

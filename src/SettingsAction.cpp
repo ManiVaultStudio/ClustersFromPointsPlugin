@@ -14,10 +14,6 @@ SettingsAction::SettingsAction(ClustersFromPointsPlugin* clustersFromPointsPlugi
 {
     setText("Clusters from points");
 
-    _algorithmAction.setMayReset(false);
-    _clustersAction.setMayReset(false);
-    _numberOfClustersAction.setMayReset(false);
-
     // Sort actions
     _algorithmAction.setSortIndex(1);
     _clustersAction.setSortIndex(2);
@@ -44,4 +40,9 @@ Dataset<Points> SettingsAction::getInputDataset()
 Dataset<Clusters> SettingsAction::getClustersDataset()
 {
     return _clustersFromPointsPlugin->getOutputDataset();
+}
+
+ClustersFromPointsPlugin& SettingsAction::getClustersFromPointsPlugin()
+{
+    return *_clustersFromPointsPlugin;
 }

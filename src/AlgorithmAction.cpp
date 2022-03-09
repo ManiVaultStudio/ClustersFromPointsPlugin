@@ -17,17 +17,6 @@ AlgorithmAction::AlgorithmAction(SettingsAction& settingsAction) :
     _currentAction(this, "Group by", ClustersFromPointsPlugin::algorithmNames.values())
 {
     setText("Group by"); 
-    setMayReset(true);
-}
-
-bool AlgorithmAction::isResettable() const
-{
-    return _currentAction.isResettable();
-}
-
-void AlgorithmAction::reset()
-{
-    _currentAction.reset();
 }
 
 SharedExtractor AlgorithmAction::getExtractor()
