@@ -53,11 +53,9 @@ public: // Action getters
 
     AlgorithmAction& getAlgorithmAction() { return _algorithmAction; }
     ClustersAction& getClustersAction() { return _clustersAction; }
-    IntegralAction& getNumberOfClustersAction() { return _numberOfClustersAction; }
 
 protected:
     ClustersFromPointsPlugin*   _clustersFromPointsPlugin;      /** Pointer to the clusters from points plugin */
     ClustersAction              _clustersAction;                /** Clusters action */
     AlgorithmAction             _algorithmAction;               /** Algorithm action */
-    IntegralAction              _numberOfClustersAction;        /** Number of clusters action */
 };

@@ -90,5 +90,5 @@ AlgorithmAction::Widget::Widget(QWidget* parent, AlgorithmAction* algorithmActio
     connect(algorithmAction, &AlgorithmAction::extractorChanged, this, extractorChanged);
 
     // Do initial update
-    extractorChanged();
+    extractorChanged(algorithmAction->getExtractor().get());
 }

@@ -52,6 +52,10 @@ IntervalExtractorSettingsAction::IntervalExtractorSettingsAction(IntervalExtract
         // Get the data range from the extractor
         const auto dataRange = _intervalExtractor.getDataRange();
 
+        // Only process valid range
+        if (dataRange.first >= dataRange.second)
+            return;
+
         // Update the range in the action
         _intervalAction.setRange(dataRange.first, dataRange.second);
     };

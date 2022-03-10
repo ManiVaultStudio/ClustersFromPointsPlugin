@@ -10,9 +10,6 @@ IdentifierExtractor::IdentifierExtractor(AlgorithmAction& algorithmAction) :
 {
     // Update dimension picker action
     _settingsAction.getDimensionAction().setPointsDataset(getInputDataset());
-
-    // Request an extraction when the current dimension index changes
-    connect(&_settingsAction.getDimensionAction(), &DimensionPickerAction::currentDimensionIndexChanged, this, &Extractor::requestExtraction);
 }
 
 void IdentifierExtractor::extract()
@@ -31,8 +28,12 @@ void IdentifierExtractor::extract()
 
         getInputDataset()->visitData([this, &clusters, &clustersMap](auto pointData) {
 
-            // Get current dimension index
+            // Get the index of the current dimension
             const auto currentDimensionIndex = _settingsAction.getDimensionAction().getCurrentDimensionIndex();
+
+            // Only proceed if we have a valid current dimension
+            if (currentDimensionIndex < 0)
+                return;
 
             // Get cluster name prefix
             const auto prefix = _algorithmAction.getSettingsAction().getClustersAction().getPrefixClustersAction().getPrefixAction().getString();

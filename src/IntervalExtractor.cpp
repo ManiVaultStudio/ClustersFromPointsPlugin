@@ -29,8 +29,12 @@ void IntervalExtractor::extract()
 
         getInputDataset()->visitData([this, &indicesInRange](auto pointData) {
 
-            // Get current dimension index
+            // Get the index of the current dimension
             const auto currentDimensionIndex = _settingsAction.getDimensionAction().getCurrentDimensionIndex();
+
+            // Only proceed if we have a valid current dimension
+            if (currentDimensionIndex < 0)
+                return;
 
             // Add each point when it is in the current interval
             for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(getInputDataset()->getNumPoints()); pointIndex++) {
@@ -100,11 +104,18 @@ void IntervalExtractor::updateDataRange()
 
     getInputDataset()->visitData([this](auto pointData) {
 
+        // Get the index of the current dimension
+        const auto currentDimensionIndex = _settingsAction.getDimensionAction().getCurrentDimensionIndex();
+
+        // Only proceed if we have a valid current dimension
+        if (currentDimensionIndex < 0)
+            return;
+
         // Compute point value range
         for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(getInputDataset()->getNumPoints()); pointIndex++) {
 
             // Get point value for the dimension
-            const auto pointValue = pointData[pointIndex][_settingsAction.getDimensionAction().getCurrentDimensionIndex()];
+            const auto pointValue = pointData[pointIndex][currentDimensionIndex];
 
             // Compute minimum
             if (pointValue < _dataRange.first)
