@@ -27,6 +27,9 @@ void ClustersFromPointsPlugin::init()
     // Add the settings action to the output clusters dataset
     getOutputDataset()->addAction(_settingsAction);
 
+    // Select the dataset in the data hierarchy
+    getOutputDataset()->getDataHierarchyItem().select();
+
     // Initialize the algorithm and clusters action
     _settingsAction.getAlgorithmAction().init();
     _settingsAction.getClustersAction().setClustersDataset(getOutputDataset());
