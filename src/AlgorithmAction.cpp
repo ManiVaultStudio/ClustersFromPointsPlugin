@@ -69,7 +69,7 @@ AlgorithmAction::Widget::Widget(QWidget* parent, AlgorithmAction* algorithmActio
 {
     auto layout = new QHBoxLayout();
     
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(algorithmAction->getCurrentAction().createWidget(this));
 
     setLayout(layout);

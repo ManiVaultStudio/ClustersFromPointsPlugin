@@ -78,7 +78,7 @@ void StratificationExtractor::extract()
 
                 // Get point value and determine stratum index
                 const auto pointValue = pointData[pointIndex][currentDimensionIndex];
-                const auto binIndex = std::min(strata.count() - 1, static_cast<std::int32_t>(floorf(pointValue / stratumLength)));
+                const auto binIndex = std::min(static_cast<std::int32_t>(strata.count() - 1), static_cast<std::int32_t>(floorf(pointValue / stratumLength)));
 
                 // Add index to stratum
                 strata[binIndex].append(pointIndex);
