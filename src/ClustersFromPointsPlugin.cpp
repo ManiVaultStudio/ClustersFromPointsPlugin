@@ -63,7 +63,7 @@ hdps::gui::PluginTriggerActions ClustersFromPointsPluginFactory::getPluginTrigge
     const auto numberOfDatasets = datasets.count();
 
     if (PluginFactory::areAllDatasetsOfTheSameType(datasets, PointType)) {
-        if (numberOfDatasets == 1) {
+        if (numberOfDatasets >= 1) {
             auto pluginTriggerAction = createPluginTriggerAction("Extract clusters from points", "Extract clusters from points", datasets, "braille");
 
             connect(pluginTriggerAction, &QAction::triggered, [this, getPluginInstance, datasets]() -> void {
