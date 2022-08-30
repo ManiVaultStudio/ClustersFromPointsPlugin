@@ -1,5 +1,7 @@
 #include "ClustersFromPointsPlugin.h"
 
+#include <actions/PluginTriggerAction.h>
+
 #include <PointData.h>
 
 using namespace hdps;
@@ -35,9 +37,9 @@ void ClustersFromPointsPlugin::init()
     _settingsAction.getClustersAction().setClustersDataset(getOutputDataset());
 }
 
-QIcon ClustersFromPointsPluginFactory::getIcon() const
+QIcon ClustersFromPointsPluginFactory::getIcon(const QColor& color /*= Qt::black*/) const
 {
-    return Application::getIconFont("FontAwesome").getIcon("braille");
+    return Application::getIconFont("FontAwesome").getIcon("braille", color);
 }
 
 AnalysisPlugin* ClustersFromPointsPluginFactory::produce()
@@ -48,4 +50,30 @@ AnalysisPlugin* ClustersFromPointsPluginFactory::produce()
 hdps::DataTypes ClustersFromPointsPluginFactory::supportedDataTypes() const
 {
     return DataTypes({ PointType });
+}
+
+hdps::gui::PluginTriggerActions ClustersFromPointsPluginFactory::getPluginTriggerActions(const hdps::Datasets& datasets) const
+{
+    PluginTriggerActions pluginTriggerActions;
+
+    const auto getPluginInstance = [this](const Dataset<Points>& dataset) -> ClustersFromPointsPlugin* {
+        return dynamic_cast<ClustersFromPointsPlugin*>(Application::core()->requestPlugin(getKind(), { dataset }));
+    };
+
+    const auto numberOfDatasets = datasets.count();
+
+    if (PluginFactory::areAllDatasetsOfTheSameType(datasets, PointType)) {
+        if (numberOfDatasets >= 1) {
+            auto pluginTriggerAction = createPluginTriggerAction("Extract clusters from points", "Extract clusters from points", datasets, "braille");
+
+            connect(pluginTriggerAction, &QAction::triggered, [this, getPluginInstance, datasets]() -> void {
+                for (auto dataset : datasets)
+                    getPluginInstance(dataset);
+            });
+
+            pluginTriggerActions << pluginTriggerAction;
+        }
+    }
+
+    return pluginTriggerActions;
 }
