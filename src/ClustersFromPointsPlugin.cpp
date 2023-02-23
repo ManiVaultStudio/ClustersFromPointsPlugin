@@ -57,19 +57,18 @@ hdps::gui::PluginTriggerActions ClustersFromPointsPluginFactory::getPluginTrigge
     PluginTriggerActions pluginTriggerActions;
 
     const auto getPluginInstance = [this](const Dataset<Points>& dataset) -> ClustersFromPointsPlugin* {
-        return dynamic_cast<ClustersFromPointsPlugin*>(Application::core()->requestPlugin(getKind(), { dataset }));
+        return dynamic_cast<ClustersFromPointsPlugin*>(plugins().requestPlugin(getKind(), { dataset }));
     };
 
     const auto numberOfDatasets = datasets.count();
 
     if (PluginFactory::areAllDatasetsOfTheSameType(datasets, PointType)) {
         if (numberOfDatasets >= 1) {
-            auto pluginTriggerAction = createPluginTriggerAction("Extract clusters", "Extract clusters from points", datasets, "braille");
-
-            connect(pluginTriggerAction, &QAction::triggered, [this, getPluginInstance, datasets]() -> void {
+            auto pluginTriggerAction = new PluginTriggerAction(const_cast<ClustersFromPointsPluginFactory*>(this), this, "Extract clusters", "Extract clusters from points", getIcon(), [this, getPluginInstance, datasets](PluginTriggerAction& pluginTriggerAction) -> void {
                 for (auto dataset : datasets)
                     getPluginInstance(dataset);
-            });
+
+        });
 
             pluginTriggerActions << pluginTriggerAction;
         }
