@@ -57,7 +57,7 @@ IntervalExtractorSettingsAction::IntervalExtractorSettingsAction(IntervalExtract
             return;
 
         // Update the range in the action
-        _intervalAction.setRange(dataRange.first, dataRange.second);
+        _intervalAction.setRange({ dataRange.first, dataRange.second });
     };
 
     // Update the range action when the data range in the extractor changes
