@@ -2,7 +2,7 @@
 #include "AlgorithmAction.h"
 #include "SettingsAction.h"
 
-#include <ClustersAction.h>
+#include <ClusterData/ClustersAction.h>
 
 IdentifierExtractor::IdentifierExtractor(AlgorithmAction& algorithmAction) :
     Extractor(algorithmAction),
