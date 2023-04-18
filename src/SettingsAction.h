@@ -7,8 +7,8 @@
 #include <actions/ToggleAction.h>
 #include <actions/IntegralAction.h>
 
-#include <ClusterData.h>
-#include <ClustersAction.h>
+#include <ClusterData/ClusterData.h>
+#include <ClusterData/ClustersAction.h>
 
 using namespace hdps::util;
 

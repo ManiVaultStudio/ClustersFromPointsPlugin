@@ -1,7 +1,7 @@
 #pragma once
 
-#include <PointData.h>
-#include <ClusterData.h>
+#include <PointData/PointData.h>
+#include <ClusterData/ClusterData.h>
 
 #include <QTimer>
 #include <QPair>

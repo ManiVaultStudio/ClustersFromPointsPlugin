@@ -4,7 +4,7 @@
 #include <actions/WidgetActionWidget.h>
 #include <actions/IntegralAction.h>
 
-#include <DimensionPickerAction.h>
+#include <PointData/DimensionPickerAction.h>
 
 using namespace hdps::gui;
 

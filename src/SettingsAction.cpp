@@ -1,7 +1,7 @@
 #include "SettingsAction.h"
 #include "ClustersFromPointsPlugin.h"
 
-#include <ClusterData.h>
+#include <ClusterData/ClusterData.h>
 
 using namespace hdps;
 
