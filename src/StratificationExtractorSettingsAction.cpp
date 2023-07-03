@@ -8,10 +8,10 @@
 using namespace hdps;
 
 StratificationExtractorSettingsAction::StratificationExtractorSettingsAction(StratificationExtractor& stratificationExtractor) :
-    WidgetAction(&stratificationExtractor),
+    WidgetAction(&stratificationExtractor, "StratificationExtractorSettingsAction"),
     _stratificationExtractor(stratificationExtractor),
     _dimensionAction(this, "Dimension"),
-    _numberOfStrataAction(this, "Number of strata", 1, 100, 10, 10)
+    _numberOfStrataAction(this, "Number of strata", 1, 100, 10)
 {
     setIcon(Application::getIconFont("FontAwesome").getIcon("cog"));
     setText("Settings");
@@ -32,5 +32,5 @@ StratificationExtractorSettingsAction::Widget::Widget(QWidget* parent, Stratific
     layout->addWidget(stratificationExtractorSettingsAction->getNumberOfStrataAction().createLabelWidget(this), 1, 0);
     layout->addWidget(stratificationExtractorSettingsAction->getNumberOfStrataAction().createWidget(this), 1, 1);
 
-    setPopupLayout(layout);
+    setLayout(layout);
 }

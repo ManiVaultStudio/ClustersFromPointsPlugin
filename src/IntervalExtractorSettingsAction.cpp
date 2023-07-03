@@ -8,7 +8,7 @@
 using namespace hdps;
 
 IntervalExtractorSettingsAction::IntervalExtractorSettingsAction(IntervalExtractor& intervalExtractor) :
-    WidgetAction(&intervalExtractor),
+    WidgetAction(&intervalExtractor, "IntervalExtractorSettingsAction"),
     _intervalExtractor(intervalExtractor),
     _dimensionAction(this, "Dimension"),
     _intervalAction(this, "Point value range"),
@@ -81,5 +81,5 @@ IntervalExtractorSettingsAction::Widget::Widget(QWidget* parent, IntervalExtract
     layout->addWidget(intervalExtractorSettingsAction->getNumberOfPointsAction().createLabelWidget(this), 3, 0);
     layout->addWidget(intervalExtractorSettingsAction->getNumberOfPointsAction().createWidget(this), 3, 1);
 
-    setPopupLayout(layout);
+    setLayout(layout);
 }

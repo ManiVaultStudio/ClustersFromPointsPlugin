@@ -56,18 +56,20 @@ void IntervalExtractor::extract()
         _extractedCluster.setName("[" + QString::number(_settingsAction.getRangeAction().getMinimum()) + " - " + QString::number(_settingsAction.getRangeAction().getMaximum()) + "]");
         _extractedCluster.setIndices(indicesInRange);
 
+        auto clusterDataset = getClustersDataset();
+
         // Ensure that the cluster exists in the clusters dataset
-        if (getClustersDataset()->getClusters().isEmpty())
+        if (clusterDataset->getClusters().isEmpty())
             addCluster(_extractedCluster);
 
         // Transfer extracted cluster to clusters dataset
-        getClustersDataset()->getClusters().first() = _extractedCluster;
+        clusterDataset->getClusters().first() = _extractedCluster;
 
         // Notify others that the clusters changed
-        events().notifyDatasetChanged(getClustersDataset());
+        events().notifyDatasetDataChanged(clusterDataset);
 
         // Select points in the cluster
-        getClustersDataset()->setSelectionIndices({ 0 });
+        clusterDataset->setSelectionIndices({ 0 });
     }
     QApplication::restoreOverrideCursor();
 }

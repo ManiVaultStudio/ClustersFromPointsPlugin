@@ -7,9 +7,9 @@
 #include <QHBoxLayout>
 
 IndexExtractorSettingsAction::IndexExtractorSettingsAction(IndexExtractor& indexExtractor) :
-    WidgetAction(&indexExtractor),
+    WidgetAction(&indexExtractor, "IndexExtractorSettingsAction"),
     _indexExtractor(indexExtractor),
-    _startIndexAction(this, "Start index", 0, 1000000, 0, 0)
+    _startIndexAction(this, "Start index", 0, 1000000, 0)
 {
     setIcon(Application::getIconFont("FontAwesome").getIcon("cog"));
     setText("Settings");
@@ -32,5 +32,5 @@ IndexExtractorSettingsAction::Widget::Widget(QWidget* parent, IndexExtractorSett
     layout->addWidget(indexExtractorSettingsAction->getStartIndexAction().createLabelWidget(this));
     layout->addWidget(indexExtractorSettingsAction->getStartIndexAction().createWidget(this));
 
-    setPopupLayout(layout);
+    setLayout(layout);
 }

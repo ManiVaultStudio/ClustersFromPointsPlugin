@@ -11,7 +11,7 @@
 using namespace hdps;
 
 AlgorithmAction::AlgorithmAction(SettingsAction& settingsAction) :
-    WidgetAction(&settingsAction),
+    WidgetAction(&settingsAction, "AlgorithmAction"),
     _settingsAction(settingsAction),
     _extractor(),
     _currentAction(this, "Group by", ClustersFromPointsPlugin::algorithmNames.values())

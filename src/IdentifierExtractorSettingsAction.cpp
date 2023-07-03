@@ -6,7 +6,7 @@
 #include <QHBoxLayout>
 
 IdentifierExtractorSettingsAction::IdentifierExtractorSettingsAction(IdentifierExtractor& identifierExtractor) :
-    WidgetAction(&identifierExtractor),
+    WidgetAction(&identifierExtractor, "IdentifierExtractorSettingsAction"),
     _dimensionAction(this, "Dimension"),
     _identifierExtractor(identifierExtractor)
 {
@@ -27,5 +27,5 @@ IdentifierExtractorSettingsAction::Widget::Widget(QWidget* parent, IdentifierExt
     layout->addWidget(identifierExtractorSettingsAction->getDimensionAction().createLabelWidget(this));
     layout->addWidget(identifierExtractorSettingsAction->getDimensionAction().createWidget(this));
 
-    setPopupLayout(layout);
+    setLayout(layout);
 }

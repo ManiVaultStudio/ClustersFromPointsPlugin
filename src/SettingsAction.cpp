@@ -6,7 +6,7 @@
 using namespace hdps;
 
 SettingsAction::SettingsAction(ClustersFromPointsPlugin* clustersFromPointsPlugin) :
-    GroupAction(nullptr, true),
+    GroupAction(nullptr, "SettingsAction", true),
     _clustersFromPointsPlugin(clustersFromPointsPlugin),
     _clustersAction(this),
     _algorithmAction(*this)
