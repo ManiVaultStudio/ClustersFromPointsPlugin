@@ -64,9 +64,6 @@ public:
      */
     AlgorithmAction(SettingsAction& settingsAction);
 
-    /** Extract the clusters from the input points */
-    void extractClusters();
-
     /**
      * Get current extractor
      * @return Shared pointer to current extractor
