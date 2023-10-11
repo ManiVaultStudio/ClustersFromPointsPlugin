@@ -38,9 +38,9 @@ This plugin produces a single clusters dataset and continuously updates the clus
 2. Right click the solution and press `Build Solution`, if this does not produce errors, continue to the next step.
 2. Right click the project `HDPS` in the Solution Explorer and select Set as StartUp Project.
 3. Right click the project again and select Properties.
-4. In the Configuration Properties -> Debugging set the `Command` to `HDPS.exe`. Set the `Working Directory` to `$(HDPS_INSTALL_DIR)/Release`.
+4. In the Configuration Properties -> Debugging set the `Command` to `ManiVault Studio.exe`. Set the `Working Directory` to `$(MV_INSTALL_DIR)/Release`.
 5. Press Apply and OK and right click the project in the Solution Explorer and press Build.
-6. If all is well the build should succeed and if you run the project with Ctrl+F5 it will launch `HDPS.exe`.
+6. If all is well the build should succeed and if you run the project with Ctrl+F5 it will launch `ManiVault Studio.exe`.
 
 ## Linux | Mac
 This depends on your IDE / compiler. Follow their instructions for compiling source code.
