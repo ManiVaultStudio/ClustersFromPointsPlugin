@@ -2,7 +2,7 @@
 #include "AlgorithmAction.h"
 #include "SettingsAction.h"
 
-using namespace hdps;
+using namespace mv;
 
 Extractor::Extractor(AlgorithmAction& algorithmAction) :
     QObject(&algorithmAction),

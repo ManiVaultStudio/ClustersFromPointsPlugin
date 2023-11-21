@@ -3,7 +3,7 @@
 
 #include <ClusterData/ClusterData.h>
 
-using namespace hdps;
+using namespace mv;
 
 SettingsAction::SettingsAction(ClustersFromPointsPlugin* clustersFromPointsPlugin) :
     GroupAction(nullptr, "SettingsAction", true),

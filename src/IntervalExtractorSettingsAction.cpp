@@ -5,7 +5,7 @@
 
 #include <QHBoxLayout>
 
-using namespace hdps;
+using namespace mv;
 
 IntervalExtractorSettingsAction::IntervalExtractorSettingsAction(IntervalExtractor& intervalExtractor) :
     WidgetAction(&intervalExtractor, "IntervalExtractorSettingsAction"),

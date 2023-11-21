@@ -6,8 +6,8 @@
 #include <QTimer>
 #include <QPair>
 
-using namespace hdps::plugin;
-using namespace hdps::gui;
+using namespace mv::plugin;
+using namespace mv::gui;
 
 class ClustersFromPointsPlugin;
 class AlgorithmAction;
@@ -67,25 +67,25 @@ public:
      * Get input dataset
      * @return Smart pointer to input points dataset
      */
-    hdps::Dataset<Points> getInputDataset();
+    mv::Dataset<Points> getInputDataset();
 
     /**
      * Get input dataset
      * @return Smart pointer to input points dataset
      */
-    hdps::Dataset<Points> getInputDataset() const;
+    mv::Dataset<Points> getInputDataset() const;
 
     /**
      * Get clusters dataset
      * @return Smart pointer to clusters dataset
      */
-    hdps::Dataset<Clusters> getClustersDataset();
+    mv::Dataset<Clusters> getClustersDataset();
 
     /**
      * Get clusters dataset
      * @return Smart pointer to clusters dataset
      */
-    hdps::Dataset<Clusters> getClustersDataset() const;
+    mv::Dataset<Clusters> getClustersDataset() const;
 
     /**
      * Get clusters from points plugin

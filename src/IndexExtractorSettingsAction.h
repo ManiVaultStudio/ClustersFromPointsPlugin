@@ -6,7 +6,7 @@
 #include <actions/TriggerAction.h>
 #include <actions/IntegralAction.h>
 
-using namespace hdps::gui;
+using namespace mv::gui;
 
 class IndexExtractor;
 

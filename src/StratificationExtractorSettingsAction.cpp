@@ -5,7 +5,7 @@
 
 #include <QGridLayout>
 
-using namespace hdps;
+using namespace mv;
 
 StratificationExtractorSettingsAction::StratificationExtractorSettingsAction(StratificationExtractor& stratificationExtractor) :
     WidgetAction(&stratificationExtractor, "StratificationExtractorSettingsAction"),

@@ -9,7 +9,7 @@
 
 #include <QWidget>
 
-using namespace hdps::gui;
+using namespace mv::gui;
 
 class SettingsAction;
 

@@ -11,7 +11,7 @@
 
 #include <ClusterData/ClusterData.h>
 
-using namespace hdps::gui;
+using namespace mv::gui;
 
 class IntervalExtractor;
 

@@ -8,7 +8,7 @@
 
 #include <QHBoxLayout>
 
-using namespace hdps;
+using namespace mv;
 
 AlgorithmAction::AlgorithmAction(SettingsAction& settingsAction) :
     WidgetAction(&settingsAction, "AlgorithmAction"),

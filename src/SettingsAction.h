@@ -10,7 +10,7 @@
 #include <ClusterData/ClusterData.h>
 #include <ClusterData/ClustersAction.h>
 
-using namespace hdps::util;
+using namespace mv::util;
 
 class ClustersFromPointsPlugin;
 

@@ -4,7 +4,7 @@
 
 #include <AnalysisPlugin.h>
 
-using namespace hdps::plugin;
+using namespace mv::plugin;
 
 /**
  * Extract clusters from points plugin class
@@ -48,7 +48,7 @@ protected:
 
 class ClustersFromPointsPluginFactory : public AnalysisPluginFactory
 {
-    Q_INTERFACES(hdps::plugin::AnalysisPluginFactory hdps::plugin::PluginFactory)
+    Q_INTERFACES(mv::plugin::AnalysisPluginFactory mv::plugin::PluginFactory)
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "nl.biovault.ClustersFromPointsPlugin" FILE "ClustersFromPointsPlugin.json")
 
@@ -77,12 +77,12 @@ public:
      * Get the data types that the plugin supports
      * @return Supported data types
      */
-    hdps::DataTypes supportedDataTypes() const override;
+    mv::DataTypes supportedDataTypes() const override;
 
     /**
      * Get plugin trigger actions given \p datasets
      * @param datasets Vector of input datasets
      * @return Vector of plugin trigger actions
      */
-    PluginTriggerActions getPluginTriggerActions(const hdps::Datasets& datasets) const override;
+    PluginTriggerActions getPluginTriggerActions(const mv::Datasets& datasets) const override;
 };

@@ -4,7 +4,7 @@
 
 #include <PointData/PointData.h>
 
-using namespace hdps;
+using namespace mv;
 
 Q_PLUGIN_METADATA(IID "nl.biovault.ClustersFromPointsPlugin")
 
@@ -47,12 +47,12 @@ AnalysisPlugin* ClustersFromPointsPluginFactory::produce()
     return new ClustersFromPointsPlugin(this);
 }
 
-hdps::DataTypes ClustersFromPointsPluginFactory::supportedDataTypes() const
+mv::DataTypes ClustersFromPointsPluginFactory::supportedDataTypes() const
 {
     return DataTypes({ PointType });
 }
 
-hdps::gui::PluginTriggerActions ClustersFromPointsPluginFactory::getPluginTriggerActions(const hdps::Datasets& datasets) const
+mv::gui::PluginTriggerActions ClustersFromPointsPluginFactory::getPluginTriggerActions(const mv::Datasets& datasets) const
 {
     PluginTriggerActions pluginTriggerActions;
 
