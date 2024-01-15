@@ -24,7 +24,7 @@ ClustersFromPointsPlugin::ClustersFromPointsPlugin(const PluginFactory* factory)
 void ClustersFromPointsPlugin::init()
 {
     // Create output dataset and assign to analysis
-    setOutputDataset(_core->addDataset("Cluster", "Clusters", getInputDataset()));
+    setOutputDataset(mv::data().createDataset("Cluster", "Clusters", getInputDataset()));
 
     // Add the settings action to the output clusters dataset
     getOutputDataset()->addAction(_settingsAction);
