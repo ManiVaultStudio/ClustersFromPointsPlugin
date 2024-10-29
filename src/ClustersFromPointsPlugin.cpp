@@ -1,7 +1,8 @@
 #include "ClustersFromPointsPlugin.h"
 
-#include <actions/PluginTriggerAction.h>
+#include "Extractor.h"
 
+#include <actions/PluginTriggerAction.h>
 #include <PointData/PointData.h>
 
 using namespace mv;
@@ -35,6 +36,13 @@ void ClustersFromPointsPlugin::init()
     // Initialize the algorithm and clusters action
     _settingsAction.getAlgorithmAction().init();
     _settingsAction.getClustersAction().setClustersDataset(getOutputDataset());
+
+    connect(&_settingsAction.getStartAction(), &TriggerAction::triggered, this, [this]() {
+        if (_settingsAction.getAlgorithmAction().getExtractor().isNull())
+            return;
+
+        _settingsAction.getAlgorithmAction().getExtractor()->requestExtraction();
+        });
 }
 
 QIcon ClustersFromPointsPluginFactory::getIcon(const QColor& color /*= Qt::black*/) const

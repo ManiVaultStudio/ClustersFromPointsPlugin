@@ -38,7 +38,6 @@ void IdentifierExtractor::extract()
             // Get cluster name prefix
             const auto prefix = _algorithmAction.getSettingsAction().getClustersAction().getPrefixClustersAction().getPrefixAction().getString();
 
-            //#pragma omp parallel for schedule(dynamic,1)
             for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(getInputDataset()->getNumPoints()); pointIndex++) {
                 const auto clusterIndex = static_cast<std::uint32_t>(pointData[pointIndex][currentDimensionIndex]);
 

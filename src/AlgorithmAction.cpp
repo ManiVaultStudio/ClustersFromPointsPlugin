@@ -16,7 +16,9 @@ AlgorithmAction::AlgorithmAction(SettingsAction& settingsAction) :
     _extractor(),
     _currentAction(this, "Group by", ClustersFromPointsPlugin::algorithmNames.values())
 {
-    setText("Group by"); 
+    setText("Group by");
+
+    _currentAction.setCurrentIndex(0);
 }
 
 SharedExtractor AlgorithmAction::getExtractor()

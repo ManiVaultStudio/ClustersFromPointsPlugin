@@ -12,11 +12,6 @@ IdentifierExtractorSettingsAction::IdentifierExtractorSettingsAction(IdentifierE
 {
     setIcon(Application::getIconFont("FontAwesome").getIcon("cog"));
     setText("Settings");
-
-    // Request extraction when the current dimension changes
-    connect(&_dimensionAction, &DimensionPickerAction::currentDimensionIndexChanged, this, [this](const std::int32_t& currentDimensionIndex) {
-        _identifierExtractor.requestExtraction();
-    });
 }
 
 IdentifierExtractorSettingsAction::Widget::Widget(QWidget* parent, IdentifierExtractorSettingsAction* identifierExtractorSettingsAction, const std::int32_t& widgetFlags) :
