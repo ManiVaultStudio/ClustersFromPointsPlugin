@@ -60,10 +60,13 @@ void StratificationExtractor::extract()
             clusters.clear();
 
             // Compute the length of the point value range
-            const auto pointValueRangeLength = maximum - minimum;
+            auto pointValueRangeLength = maximum - minimum;
 
             if (pointValueRangeLength < 0.0f)
                 return;
+
+            if (pointValueRangeLength == 0.0f)  //maximum == minimum
+                pointValueRangeLength = 1.f;
 
             // Resize to the number of strata
             strata.resize(_settingsAction.getNumberOfStrataAction().getValue());
