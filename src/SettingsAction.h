@@ -3,12 +3,10 @@
 #include "AlgorithmAction.h"
 
 #include <actions/GroupAction.h>
-#include <actions/StringAction.h>
-#include <actions/ToggleAction.h>
-#include <actions/IntegralAction.h>
 
 #include <ClusterData/ClusterData.h>
 #include <ClusterData/ClustersAction.h>
+#include <actions/TriggerAction.h>
 
 using namespace mv::util;
 
@@ -53,9 +51,11 @@ public: // Action getters
 
     AlgorithmAction& getAlgorithmAction() { return _algorithmAction; }
     ClustersAction& getClustersAction() { return _clustersAction; }
+    TriggerAction& getStartAction() { return _startAction; }
 
 protected:
     ClustersFromPointsPlugin*   _clustersFromPointsPlugin;      /** Pointer to the clusters from points plugin */
     ClustersAction              _clustersAction;                /** Clusters action */
     AlgorithmAction             _algorithmAction;               /** Algorithm action */
+    TriggerAction               _startAction;                   /** Start action */
 };

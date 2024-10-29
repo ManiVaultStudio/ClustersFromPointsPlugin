@@ -39,9 +39,6 @@ public:
      */
     virtual WidgetAction& getSettingsAction() = 0;
 
-    /** Request for an extraction (when not doing so already) */
-    void requestExtraction();
-
     /**
      * Get clusters
      * @return Clusters
@@ -112,9 +109,11 @@ signals:
     /** Signals that the extraction process finished */
     void extracted();
 
+public slots:
+    void requestExtraction();
+
 protected:
     AlgorithmAction&    _algorithmAction;   /** Reference to algorithm action */
-    QTimer              _extractTimer;      /** Timer to prevent unnecessary updates */
 };
 
 using SharedExtractor = QSharedPointer<Extractor>;

@@ -17,30 +17,17 @@ IntervalExtractorSettingsAction::IntervalExtractorSettingsAction(IntervalExtract
     setIcon(Application::getIconFont("FontAwesome").getIcon("cog"));
     setText("Settings");
 
-    //_intervalAction.getRangeMinAction().setUpdateDuringDrag(false);
-    //_intervalAction.getRangeMaxAction().setUpdateDuringDrag(false);
-
     // Update the data range and perform an initial extraction
     _intervalExtractor.updateDataRange();
-    _intervalExtractor.requestExtraction();
 
     // Request extraction when the current dimension changes
     connect(&_dimensionAction, &DimensionPickerAction::currentDimensionIndexChanged, this, [this](const std::int32_t& currentDimensionIndex) {
         _intervalExtractor.updateDataRange();
-        _intervalExtractor.requestExtraction();
     });
 
     // Set the number of clusters action as read-only
     _numberOfPointsAction.setEnabled(false);
     _numberOfPointsAction.setDefaultWidgetFlags(IntegralAction::LineEdit);
-
-    // Request extraction when the current dimension changes
-    connect(&_dimensionAction, &DimensionPickerAction::currentDimensionIndexChanged, this, [this](const std::int32_t& currentDimensionIndex) {
-        _intervalExtractor.requestExtraction();
-    });
-
-    // Request extraction when the number of strata changes
-    connect(&_intervalAction, &DecimalRangeAction::rangeChanged, &_intervalExtractor, &Extractor::requestExtraction);
 
     // Update actions post-extraction
     connect(&_intervalExtractor, &Extractor::extracted, this, [this]() -> void {

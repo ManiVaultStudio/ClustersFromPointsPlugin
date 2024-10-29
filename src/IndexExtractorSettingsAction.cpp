@@ -16,12 +16,6 @@ IndexExtractorSettingsAction::IndexExtractorSettingsAction(IndexExtractor& index
 
     _startIndexAction.setUpdateDuringDrag(false);
     _startIndexAction.setDefaultWidgetFlags(IntegralAction::SpinBox);
-
-    // Request extraction when the start index changes
-    connect(&_startIndexAction, &IntegralAction::valueChanged, &_indexExtractor, &IndexExtractor::requestExtraction);
-
-    // Request extraction an initial extraction
-    _indexExtractor.requestExtraction();
 }
 
 IndexExtractorSettingsAction::Widget::Widget(QWidget* parent, IndexExtractorSettingsAction* indexExtractorSettingsAction, const std::int32_t& widgetFlags) :

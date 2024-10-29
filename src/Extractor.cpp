@@ -6,33 +6,18 @@ using namespace mv;
 
 Extractor::Extractor(AlgorithmAction& algorithmAction) :
     QObject(&algorithmAction),
-    _algorithmAction(algorithmAction),
-    _extractTimer()
+    _algorithmAction(algorithmAction)
 {
-    // Configure extraction timer
-    _extractTimer.setSingleShot(true);
-    _extractTimer.setInterval(250);
-
-    // Perform the extract process when the timer times out
-    connect(&_extractTimer, &QTimer::timeout, [this]() {
-
-        // Perform the extraction and execute post extraction operations
-        extract();
-        postExtract();
-
-        // Inform others that the extraction process finished
-        emit extracted();
-    });
 }
 
 void Extractor::requestExtraction()
 {
-    // Do not extract when the timers is active
-    if (_extractTimer.isActive())
-        return;
+    // Perform the extraction and execute post extraction operations
+    extract();
+    postExtract();
 
-    // Postpone extraction
-    _extractTimer.start();
+    // Inform others that the extraction process finished
+    emit extracted();
 }
 
 QVector<Cluster> Extractor::getClusters()

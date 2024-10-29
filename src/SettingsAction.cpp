@@ -9,7 +9,8 @@ SettingsAction::SettingsAction(ClustersFromPointsPlugin* clustersFromPointsPlugi
     GroupAction(nullptr, "SettingsAction", true),
     _clustersFromPointsPlugin(clustersFromPointsPlugin),
     _clustersAction(this),
-    _algorithmAction(*this)
+    _algorithmAction(*this),
+    _startAction(this, "Start")
 {
     setText("Clusters from points");
 
@@ -25,6 +26,7 @@ SettingsAction::SettingsAction(ClustersFromPointsPlugin* clustersFromPointsPlugi
     // Add actions to layout
     addAction(&_clustersAction);
     addAction(&_algorithmAction);
+    addAction(&_startAction);
 }
 
 Dataset<Points> SettingsAction::getInputDataset()

@@ -14,11 +14,9 @@ StratificationExtractor::StratificationExtractor(AlgorithmAction& algorithmActio
     // Request extraction when the current dimension changes
     connect(&_settingsAction.getDimensionAction(), &DimensionPickerAction::currentDimensionIndexChanged, this, [this](const std::int32_t& currentDimensionIndex) {
         updateDataRange();
-        requestExtraction();
     });
 
     updateDataRange();
-    requestExtraction();
 }
 
 void StratificationExtractor::extract()

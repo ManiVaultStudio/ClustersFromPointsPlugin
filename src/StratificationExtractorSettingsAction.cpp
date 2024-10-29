@@ -17,9 +17,6 @@ StratificationExtractorSettingsAction::StratificationExtractorSettingsAction(Str
     setText("Settings");
 
     _numberOfStrataAction.setUpdateDuringDrag(false);
-
-    // Request extraction when the number of strata changes
-    connect(&_numberOfStrataAction, &IntegralAction::valueChanged, &_stratificationExtractor, &StratificationExtractor::requestExtraction);
 }
 
 StratificationExtractorSettingsAction::Widget::Widget(QWidget* parent, StratificationExtractorSettingsAction* stratificationExtractorSettingsAction, const std::int32_t& widgetFlags) :
