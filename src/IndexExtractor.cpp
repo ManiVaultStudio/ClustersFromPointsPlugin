@@ -25,9 +25,6 @@ void IndexExtractor::extract()
 
         Timer timer;
 
-        // Maps point value to cluster index
-        QMap<std::uint32_t, std::uint32_t> clustersMap;
-
         // Resulting clusters
         QVector<Cluster> clusters;
 
@@ -37,16 +34,14 @@ void IndexExtractor::extract()
         // Get cluster name prefix
         const auto prefix = _algorithmAction.getSettingsAction().getClustersAction().getPrefixClustersAction().getPrefixAction().getString();
 
-        getInputDataset()->visitData([this, &clusters, &clustersMap, prefix](auto pointData) {
-            for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(getInputDataset()->getNumPoints()); pointIndex++) {
+        for (std::int32_t pointIndex = 0; pointIndex < static_cast<std::int32_t>(getInputDataset()->getNumPoints()); pointIndex++) {
 
-                // Get point index with possible offset
-                const auto offsetPointIndex = static_cast<std::uint32_t>(pointIndex) + _settingsAction.getStartIndexAction().getValue();
+            // Get point index with possible offset
+            const auto offsetPointIndex = static_cast<std::uint32_t>(pointIndex) + _settingsAction.getStartIndexAction().getValue();
 
-                // Add cluster for the point
-                clusters[pointIndex] = Cluster(prefix + QString::number(offsetPointIndex), Qt::gray, { offsetPointIndex });
-            }
-        });
+            // Add cluster for the point
+            clusters[pointIndex] = Cluster(prefix + QString::number(offsetPointIndex), Qt::gray, { offsetPointIndex });
+        }
 
         // Assign clusters to the clusters dataset
         setClusters(clusters);
