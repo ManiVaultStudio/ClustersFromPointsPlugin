@@ -29,7 +29,7 @@ void IndexExtractor::extract()
         QVector<Cluster> clusters;
 
         // Allocate room for clusters
-        clusters.resize(getInputDataset()->getNumPoints());
+        clusters.reserve(getInputDataset()->getNumPoints());
 
         // Get cluster name prefix
         const auto prefix = _algorithmAction.getSettingsAction().getClustersAction().getPrefixClustersAction().getPrefixAction().getString();
@@ -40,7 +40,7 @@ void IndexExtractor::extract()
             const auto offsetPointIndex = static_cast<std::uint32_t>(pointIndex) + _settingsAction.getStartIndexAction().getValue();
 
             // Add cluster for the point
-            clusters[pointIndex] = Cluster(prefix + QString::number(offsetPointIndex), Qt::gray, { offsetPointIndex });
+            clusters.append(Cluster(prefix + QString::number(offsetPointIndex), Qt::gray, { offsetPointIndex }));
         }
 
         // Assign clusters to the clusters dataset
