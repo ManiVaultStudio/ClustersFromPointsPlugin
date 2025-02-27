@@ -10,7 +10,7 @@ IdentifierExtractorSettingsAction::IdentifierExtractorSettingsAction(IdentifierE
     _dimensionAction(this, "Dimension"),
     _identifierExtractor(identifierExtractor)
 {
-    setIcon(Application::getIconFont("FontAwesome").getIcon("cog"));
+    setIconByName("gear");
     setText("Settings");
 }
 
