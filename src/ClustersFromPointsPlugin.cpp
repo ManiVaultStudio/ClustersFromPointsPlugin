@@ -45,11 +45,6 @@ void ClustersFromPointsPlugin::init()
         });
 }
 
-QIcon ClustersFromPointsPluginFactory::getIcon(const QColor& color /*= Qt::black*/) const
-{
-    return Application::getIconFont("FontAwesome").getIcon("braille", color);
-}
-
 AnalysisPlugin* ClustersFromPointsPluginFactory::produce()
 {
     return new ClustersFromPointsPlugin(this);
