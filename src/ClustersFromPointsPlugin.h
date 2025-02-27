@@ -55,7 +55,7 @@ class ClustersFromPointsPluginFactory : public AnalysisPluginFactory
 public:
 
     /** Default constructor */
-    ClustersFromPointsPluginFactory() = default;
+    ClustersFromPointsPluginFactory();
 
     /** Destructor */
     ~ClustersFromPointsPluginFactory() = default;

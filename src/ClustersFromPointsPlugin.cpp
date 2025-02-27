@@ -45,6 +45,11 @@ void ClustersFromPointsPlugin::init()
         });
 }
 
+ClustersFromPointsPluginFactory::ClustersFromPointsPluginFactory()
+{
+    setIconByName("braille");
+}
+
 AnalysisPlugin* ClustersFromPointsPluginFactory::produce()
 {
     return new ClustersFromPointsPlugin(this);
