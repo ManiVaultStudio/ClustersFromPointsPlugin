@@ -72,7 +72,7 @@ mv::gui::PluginTriggerActions ClustersFromPointsPluginFactory::getPluginTriggerA
 
     if (PluginFactory::areAllDatasetsOfTheSameType(datasets, PointType)) {
         if (numberOfDatasets >= 1) {
-            auto pluginTriggerAction = new PluginTriggerAction(const_cast<ClustersFromPointsPluginFactory*>(this), this, "Extract clusters", "Extract clusters from points", getIcon(), [this, getPluginInstance, datasets](PluginTriggerAction& pluginTriggerAction) -> void {
+            auto pluginTriggerAction = new PluginTriggerAction(const_cast<ClustersFromPointsPluginFactory*>(this), this, "Extract clusters", "Extract clusters from points", icon(), [this, getPluginInstance, datasets](PluginTriggerAction& pluginTriggerAction) -> void {
                 for (auto dataset : datasets)
                     getPluginInstance(dataset);
 
