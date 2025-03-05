@@ -11,7 +11,7 @@ IndexExtractorSettingsAction::IndexExtractorSettingsAction(IndexExtractor& index
     _indexExtractor(indexExtractor),
     _startIndexAction(this, "Start index", 0, 1000000, 0)
 {
-    setIcon(Application::getIconFont("FontAwesome").getIcon("cog"));
+    setIconByName("gear");
     setText("Settings");
 
     _startIndexAction.setUpdateDuringDrag(false);

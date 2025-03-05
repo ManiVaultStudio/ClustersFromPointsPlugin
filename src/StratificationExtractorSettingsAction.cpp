@@ -13,7 +13,7 @@ StratificationExtractorSettingsAction::StratificationExtractorSettingsAction(Str
     _dimensionAction(this, "Dimension"),
     _numberOfStrataAction(this, "Number of strata", 1, 100, 10)
 {
-    setIcon(Application::getIconFont("FontAwesome").getIcon("cog"));
+    setIconByName("gear");
     setText("Settings");
 
     _numberOfStrataAction.setUpdateDuringDrag(false);

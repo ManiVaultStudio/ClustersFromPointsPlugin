@@ -14,7 +14,7 @@ IntervalExtractorSettingsAction::IntervalExtractorSettingsAction(IntervalExtract
     _intervalAction(this, "Point value range"),
     _numberOfPointsAction(this, "Number of points", 0, 1000000000)
 {
-    setIcon(Application::getIconFont("FontAwesome").getIcon("cog"));
+    setIconByName("gear");
     setText("Settings");
 
     // Update the data range and perform an initial extraction
