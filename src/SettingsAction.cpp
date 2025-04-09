@@ -6,7 +6,7 @@
 using namespace mv;
 
 SettingsAction::SettingsAction(ClustersFromPointsPlugin* clustersFromPointsPlugin) :
-    GroupAction(nullptr, "SettingsAction", true),
+    GroupAction(nullptr, "ClustersFromPointsSettings", true),
     _clustersFromPointsPlugin(clustersFromPointsPlugin),
     _clustersAction(this),
     _algorithmAction(*this),

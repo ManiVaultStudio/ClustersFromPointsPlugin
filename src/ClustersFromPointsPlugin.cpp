@@ -3,7 +3,10 @@
 #include "Extractor.h"
 
 #include <actions/PluginTriggerAction.h>
+#include <ClusterData/ClusterData.h>
 #include <PointData/PointData.h>
+
+#include <algorithm>
 
 using namespace mv;
 
@@ -57,30 +60,58 @@ AnalysisPlugin* ClustersFromPointsPluginFactory::produce()
 
 mv::DataTypes ClustersFromPointsPluginFactory::supportedDataTypes() const
 {
-    return DataTypes({ PointType });
+    return DataTypes({ PointType, ClusterType });
 }
 
 mv::gui::PluginTriggerActions ClustersFromPointsPluginFactory::getPluginTriggerActions(const mv::Datasets& datasets) const
 {
     PluginTriggerActions pluginTriggerActions;
 
-    const auto getPluginInstance = [this](const Dataset<Points>& dataset) -> ClustersFromPointsPlugin* {
-        return dynamic_cast<ClustersFromPointsPlugin*>(plugins().requestPlugin(getKind(), { dataset }));
-    };
-
     const auto numberOfDatasets = datasets.count();
 
-    if (PluginFactory::areAllDatasetsOfTheSameType(datasets, PointType)) {
-        if (numberOfDatasets >= 1) {
-            auto pluginTriggerAction = new PluginTriggerAction(const_cast<ClustersFromPointsPluginFactory*>(this), this, "Extract clusters", "Extract clusters from points", icon(), [this, getPluginInstance, datasets](PluginTriggerAction& pluginTriggerAction) -> void {
-                for (auto dataset : datasets)
-                    getPluginInstance(dataset);
+    if (numberOfDatasets < 1) {
+        return pluginTriggerActions;
+    }
 
-        });
+    if (PluginFactory::areAllDatasetsOfTheSameType(datasets, PointType)) {
+
+        const auto getPluginInstance = [this](const Dataset<Points>& dataset) -> ClustersFromPointsPlugin* {
+            return dynamic_cast<ClustersFromPointsPlugin*>(plugins().requestPlugin(getKind(), { dataset }));
+            };
+
+        auto pluginTriggerAction = new PluginTriggerAction(const_cast<ClustersFromPointsPluginFactory*>(this), this, "Extract clusters", "Extract clusters from points", icon(), [this, getPluginInstance, datasets](PluginTriggerAction& pluginTriggerAction) -> void {
+            for (const auto& dataset : datasets) {
+                getPluginInstance(dataset);
+            }
+            });
+
+        pluginTriggerActions << pluginTriggerAction;
+
+    } // PointType
+
+    if (PluginFactory::areAllDatasetsOfTheSameType(datasets, ClusterType)) {
+
+        const bool allHaveClustersFromPoints = std::all_of(datasets.begin(), datasets.end(), [](const Dataset<DatasetImpl>& dataset) -> bool {
+            return dataset->findChildByPath("Clusters from points");
+            });
+
+        if (allHaveClustersFromPoints) {
+            auto pluginTriggerAction = new PluginTriggerAction(const_cast<ClustersFromPointsPluginFactory*>(this), this, "Start clustering...", "Start clustering if dataset has Extract Clusters Analysis", icon(), [this, datasets](PluginTriggerAction& pluginTriggerAction) -> void {
+                for (const auto& dataset : datasets) {
+                    auto startAction = dataset->findChildByPath("Clusters from points/Start");
+                    if (!startAction)
+                        continue;
+                    TriggerAction* startTriggerAction = dynamic_cast<TriggerAction*>(startAction);
+                    if (!startTriggerAction)
+                        continue;
+                    startTriggerAction->trigger();
+                }
+                });
 
             pluginTriggerActions << pluginTriggerAction;
         }
-    }
+
+    } // ClusterType
 
     return pluginTriggerActions;
 }
