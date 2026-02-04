@@ -50,7 +50,7 @@ class ClustersFromPointsPluginFactory : public AnalysisPluginFactory
 {
     Q_INTERFACES(mv::plugin::AnalysisPluginFactory mv::plugin::PluginFactory)
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "nl.biovault.ClustersFromPointsPlugin" FILE "ClustersFromPointsPlugin.json")
+    Q_PLUGIN_METADATA(IID "nl.biovault.ClustersFromPointsPlugin" FILE "PluginInfo.json")
 
 public:
 
