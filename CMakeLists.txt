@@ -4,7 +4,8 @@ cmake_minimum_required(VERSION 3.22)
 # ClustersFromPoints Analysis Plugin
 # -----------------------------------------------------------------------------
 set(PROJECT "ClustersFromPointsPlugin")
-PROJECT(${PROJECT})
+PROJECT(${PROJECT}
+       LANGUAGES CXX)
 
 # -----------------------------------------------------------------------------
 # CMake Options
