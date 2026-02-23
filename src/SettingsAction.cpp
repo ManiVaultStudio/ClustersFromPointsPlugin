@@ -9,6 +9,8 @@ SettingsAction::SettingsAction(ClustersFromPointsPlugin* clustersFromPointsPlugi
     GroupAction(nullptr, "ClustersFromPointsSettings", true),
     _clustersFromPointsPlugin(clustersFromPointsPlugin),
     _clustersAction(this),
+    _externalDatasetAction(this, "External dataset"),
+    _dimensionAction(this, "Dimension"),
     _algorithmAction(*this),
     _startAction(this, "Start")
 {
@@ -23,9 +25,13 @@ SettingsAction::SettingsAction(ClustersFromPointsPlugin* clustersFromPointsPlugi
     // Set widget layout for clusters action
     _clustersAction.setDefaultWidgetFlags(ClustersAction::Filter | ClustersAction::Select | ClustersAction::Remove | ClustersAction::Merge | ClustersAction::Subset | ClustersAction::Colorize | ClustersAction::Prefix);
 
+    _externalDatasetAction.setDefaultWidgetFlag(DatasetPickerAction::WidgetFlag::Clearable);
+
     // Add actions to layout
     addAction(&_clustersAction);
-    addAction(&_algorithmAction);
+    addAction(&_externalDatasetAction);
+    addAction(&_dimensionAction);
+	addAction(&_algorithmAction);
     addAction(&_startAction);
 }
 
