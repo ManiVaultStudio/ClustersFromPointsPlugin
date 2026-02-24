@@ -3,6 +3,7 @@
 #include "AlgorithmAction.h"
 
 #include <actions/GroupAction.h>
+#include <PointData/DimensionPickerAction.h>
 
 #include <ClusterData/ClusterData.h>
 #include <ClusterData/ClustersAction.h>

@@ -25,7 +25,7 @@ SettingsAction::SettingsAction(ClustersFromPointsPlugin* clustersFromPointsPlugi
 
     // Add actions to layout
     addAction(&_clustersAction);
-    addAction(&_algorithmAction);
+	addAction(&_algorithmAction);
     addAction(&_startAction);
 }
 

@@ -6,21 +6,16 @@
 #include <QHBoxLayout>
 
 IdentifierExtractorSettingsAction::IdentifierExtractorSettingsAction(IdentifierExtractor& identifierExtractor) :
-    WidgetAction(&identifierExtractor, "IdentifierExtractorSettingsAction"),
+    VerticalGroupAction(&identifierExtractor, "IdentifierExtractorSettingsAction"),
     _dimensionAction(this, "Dimension"),
+    _externalDatasetAction(this, "External dataset"),
     _identifierExtractor(identifierExtractor)
 {
     setIconByName("gear");
     setText("Settings");
-}
 
-IdentifierExtractorSettingsAction::Widget::Widget(QWidget* parent, IdentifierExtractorSettingsAction* identifierExtractorSettingsAction, const std::int32_t& widgetFlags) :
-    WidgetActionWidget(parent, identifierExtractorSettingsAction, widgetFlags)
-{
-    auto layout = new QHBoxLayout();
-
-    layout->addWidget(identifierExtractorSettingsAction->getDimensionAction().createLabelWidget(this));
-    layout->addWidget(identifierExtractorSettingsAction->getDimensionAction().createWidget(this));
-
-    setLayout(layout);
+    _externalDatasetAction.setDefaultWidgetFlag(DatasetPickerAction::WidgetFlag::Clearable);
+    
+    addAction(&_dimensionAction);
+    addAction(&_externalDatasetAction);
 }
