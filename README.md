@@ -21,3 +21,8 @@ Please follow these steps to generate clusters:
 - Click `Start`
 
 To start, you can also select one or multiple cluster datasets with this analysis and click Analyze > `Start clustering...`
+
+## Tutorials
+
+![clusters_from_points_extension](https://github.com/user-attachments/assets/3dca02db-6dbf-4904-b5b1-f41bea318c1f)
+*This tutorial shows how to use an external datas to partition points in clusters using rounding*
