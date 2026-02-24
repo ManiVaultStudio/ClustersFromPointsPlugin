@@ -33,5 +33,13 @@ public:
     WidgetAction& getSettingsAction() override;
 
 protected:
+
+    /**
+     * Get input dataset
+     * @return Smart pointer to input points dataset
+     */
+    mv::Dataset<Points> getInputDataset() override;
+
+protected:
     IdentifierExtractorSettingsAction   _settingsAction;    /** Settings action */
 };

@@ -64,7 +64,7 @@ public:
      * Get input dataset
      * @return Smart pointer to input points dataset
      */
-    mv::Dataset<Points> getInputDataset();
+    virtual mv::Dataset<Points> getInputDataset();
 
     /**
      * Get input dataset

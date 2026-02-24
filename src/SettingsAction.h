@@ -3,12 +3,11 @@
 #include "AlgorithmAction.h"
 
 #include <actions/GroupAction.h>
-#include <actions/DatasetPickerAction.h>
+#include <PointData/DimensionPickerAction.h>
 
 #include <ClusterData/ClusterData.h>
 #include <ClusterData/ClustersAction.h>
 #include <actions/TriggerAction.h>
-#include <PointData/DimensionPickerAction.h>
 
 using namespace mv::util;
 
@@ -53,15 +52,11 @@ public: // Action getters
 
     AlgorithmAction& getAlgorithmAction() { return _algorithmAction; }
     ClustersAction& getClustersAction() { return _clustersAction; }
-    DatasetPickerAction& getExternalDatasetAction() { return _externalDatasetAction; }
-    DimensionPickerAction& getDimensionAction() { return _dimensionAction; }
     TriggerAction& getStartAction() { return _startAction; }
 
 protected:
     ClustersFromPointsPlugin*   _clustersFromPointsPlugin;      /** Pointer to the clusters from points plugin */
     ClustersAction              _clustersAction;                /** Clusters action */
-    DatasetPickerAction         _externalDatasetAction;         /** Dataset picker action for picking an external dataset to merge with the clusters dataset (optional) */
-    DimensionPickerAction       _dimensionAction;               /** Dimension picker action */
     AlgorithmAction             _algorithmAction;               /** Algorithm action */
     TriggerAction               _startAction;                   /** Start action */
 };
