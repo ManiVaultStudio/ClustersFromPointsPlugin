@@ -34,13 +34,13 @@ public:
      * Get smart pointer to input points dataset
      * @return Smart pointer to input points dataset
      */
-    Dataset<Points> getInputDataset();
+    mv::Dataset<Points> getInputDataset();
 
     /**
      * Get smart pointer to clusters dataset
      * @return Smart pointer to clusters dataset
      */
-    Dataset<Clusters> getClustersDataset();
+    mv::Dataset<Clusters> getClustersDataset();
 
     /**
      * Get clusters from points plugin

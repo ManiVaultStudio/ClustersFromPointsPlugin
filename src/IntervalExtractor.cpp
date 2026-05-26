@@ -66,7 +66,7 @@ void IntervalExtractor::extract()
         clusterDataset->getClusters().first() = _extractedCluster;
 
         // Notify others that the clusters changed
-        events().notifyDatasetDataChanged(clusterDataset);
+        mv::events().notifyDatasetDataChanged(clusterDataset);
 
         // Select points in the cluster
         clusterDataset->setSelectionIndices({ 0 });
