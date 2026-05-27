@@ -72,9 +72,12 @@ class ClustersFromPointsPluginConan(ConanFile):
         pass
 
     def system_requirements(self):
-        #  May be needed for macOS or Linux
-        pass
-
+        if os_info.is_macos:
+            installer = SystemPackageTool()
+            installer.install("libomp")
+            proc = subprocess.run("brew --prefix libomp",  shell=True, capture_output=True)
+            subprocess.run(f"ln {proc.stdout.decode('UTF-8').strip()}/lib/libomp.dylib /usr/local/lib/libomp.dylib", shell=True)
+            
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
@@ -105,7 +108,12 @@ class ClustersFromPointsPluginConan(ConanFile):
 
         # Set some build options
         tc.variables["MV_UNITY_BUILD"] = "ON"
-
+        
+        if os_info.is_macos:
+            proc = subprocess.run("brew --prefix libomp", shell=True, capture_output=True)
+            prefix_path = f"{proc.stdout.decode('UTF-8').strip()}"
+            tc.variables["OpenMP_ROOT"] = prefix_path
+        
         tc.generate()
         
     def _configure_cmake(self):
