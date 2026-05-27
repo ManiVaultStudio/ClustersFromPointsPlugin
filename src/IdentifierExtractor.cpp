@@ -22,7 +22,7 @@ IdentifierExtractor::IdentifierExtractor(AlgorithmAction& algorithmAction) :
         if (dataset->getDataType() != PointType)
             return false;
 
-        const auto pointsDataset = Dataset<Points>(dataset);
+        const auto pointsDataset = mv::Dataset<Points>(dataset);
 
         if (pointsDataset->getNumPoints() != _algorithmAction.getSettingsAction().getInputDataset()->getNumPoints())
             return false;
